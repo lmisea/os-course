@@ -60,9 +60,10 @@ int does_user_wanna_save(char c) {
 }
 
 int main() {
+  char c;
+
   COMPUTER("Press any key.\n");
   USER("");
-  char c;
   READCHAR(c);
   USER_CHAR("Okay... '%c'\n", c);
   READCHAR(c); // This is here to consume the newline character
