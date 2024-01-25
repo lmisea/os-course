@@ -1,0 +1,4 @@
+{
+  // This is for ignoring the READCHAR word with the spell checker
+  "cSpell.words": ["READCHAR"]
+}
