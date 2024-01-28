@@ -9,22 +9,78 @@ This repository contains labs, assignments, and projects for the Sistemas Operat
 The repository is structured as follows:
 
 - Every week, a new lab is added as `labx`, where `x` is the number of the week.
-- Inside each `labx` folder, there are two subfolders:
-  - `assignment`: Contains the assignment for that week. This folder is optional, as not every week has an associated assignment.
-  - `class`: Contains the class materials for that week.
-- There are also two projects, which are stored in the `project1` and `project2` folders.
+- Inside each `labx` folder, there are up to four folders:
+
+  - `assign`: Contains the code for the assignment of the lab. It is optional, because not every lab has an assignment. It only contains `.c` and `.h` files and is compiled with the lab `Makefile`. Meaning that the executables for the assignment are generated in the `bin` folder of the lab.
+  - `bin`: Contains the executables generated after compiling the code.
+  - `build`: Contains the object files generated after compiling the code.
+  - `src`: Contains the source code for the lab.
+
+    Additionally, there is a `Makefile` at the root of the lab folder, which is used to compile all the code.
+
+- There are also three folders for the projects:
+
+  - `project0`: Contains the code for the first project.
+  - `project1`: Contains the code for the second project.
+  - `project2`: Contains the code for the third project.
+
+    The projects are structured in the same way as the labs with a `bin`, `build`, and `src` folder, along with a `Makefile` at the root of the project folder.
 
 ### Tree-like folder structure
 
-```bash
+```
   .
   ├── labx
-  │ ├── assignment
-  │ └── class
-  ├── project1
-  ├── project2
+  │ ├── assign (optional)
+  │ │ ├── .c files
+  │ │ └── .h files
+  │ ├── bin
+  │ │ └─ .out files (executables)
+  │ ├── build
+  │ │ └─ .o files (object files)
+  │ ├── src
+  │ │ ├── .c files
+  │ │ └── .h files
+  │ └── Makefile
+  ├── projectx
+  │ ├── bin
+  │ │ └─ run.out (executable)
+  │ ├── build
+  │ │ └─ .o files (object files)
+  │ ├── src
+  │ │ ├── .c files
+  │ │ └── .h files
+  │ └── Makefile
   ├── LICENSE
   └── README.md
+```
+
+## Compiling and running
+
+Every lab and project has a `Makefile` that can be used to compile the code. To compile the code, run the following command:
+
+```bash
+make
+```
+
+This will generate all the executables for the lab or project into the `bin` folder. And also, it will generate the `build` folder, which contains all the object files generated during the compilation process.
+
+### Running the executables
+
+All the executables are stored in the `bin` folder and have the `.out` extension. To run an executable, run the following command:
+
+```bash
+./bin/executable.out
+```
+
+> Replace `executable` with the name of the executable you want to run.
+
+### Cleaning all the generated files
+
+To clean all the generated files, run the following command:
+
+```bash
+make clean
 ```
 
 ## Laboratory group
