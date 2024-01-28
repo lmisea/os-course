@@ -9,40 +9,7 @@
 #include <string.h> /* strcspn */
 #include <time.h>   /* time_t, struct tm, mktime */
 
-enum clases { ECONOMY, BUSINESS, FIRST }; /* The classes of the flights */
-
-/* Allows terminals to be either a number or a letter */
-union terminal {
-  int terminal_number;  /* Number of the terminal for European airports */
-  char terminal_letter; /* Letter of the terminal for American airports */
-};
-
-/* The flight structure */
-struct flight {
-  char origin[4];                    /* The origin of the flight */
-  char destination[4];               /* The destination of the flight */
-  char flight_code[6];               /* The flight code */
-  enum clases flight_class;          /* The class of the flight */
-  char airplane_seat[4];             /* The seat of the airplane */
-  time_t departure_time;             /* The time of departure */
-  time_t arrival_time;               /* The time of arrival */
-  union terminal departure_terminal; /* The terminal of departure */
-  int departure_gate;                /* The gate of departure */
-  union terminal arrival_terminal;   /* The terminal of arrival */
-  int arrival_gate;                  /* The gate of arrival */
-};
-
-/* The sequence of flights structure */
-struct sequence_of_flights {
-  struct flight *flights; /* The flights */
-  int num_flights;        /* The number of flights */
-};
-
-struct sequence_of_flights *create_sequence_of_flights(int num_flights);
-void get_flight_info(struct flight *flight, int flight_number);
-time_t get_time(char *time_name);
-void print_sequence_of_flights(const struct sequence_of_flights *sequence);
-void print_flight_info(const struct flight *flight, int flight_number);
+#include "sequence_of_flights.h"
 
 int main(int argc, char const *argv[]) {
   int num_flights; /* The number of flights */
@@ -59,7 +26,6 @@ int main(int argc, char const *argv[]) {
   return EXIT_SUCCESS;
 }
 
-/* Create a sequence of flights */
 struct sequence_of_flights *create_sequence_of_flights(int num_flights) {
   struct sequence_of_flights *sequence; /* The sequence of flights */
 
@@ -84,12 +50,12 @@ struct sequence_of_flights *create_sequence_of_flights(int num_flights) {
 
   /* Ask the user for the information of each flight */
   for (int i = 0; i < num_flights; i++) {
+    printf("Enter the information of flight %d\n", i + 1);
     get_flight_info(&sequence->flights[i], i);
   }
   return sequence;
 }
 
-/* Get the information of a flight */
 void get_flight_info(struct flight *flight, int flight_number) {
   int class; /* The class of the flight */
 
@@ -106,11 +72,11 @@ void get_flight_info(struct flight *flight, int flight_number) {
   /* Store the class of the flight */
   switch (class) {
   case 0:
-    flight->flight_class = ECONOMY;
+    flight->flight_class = ECON;
     break;
 
   case 1:
-    flight->flight_class = BUSINESS;
+    flight->flight_class = BUS;
     break;
 
   case 2:
@@ -118,11 +84,12 @@ void get_flight_info(struct flight *flight, int flight_number) {
     break;
 
   default:
-    flight->flight_class = ECONOMY;
+    flight->flight_class = ECON;
   }
 
   printf("Airplane seat: ");
   scanf("%s", flight->airplane_seat);
+  /* Get the time of departure */
   flight->departure_time = get_time("departure");
 
   /* Check if the flight is European or American */
@@ -139,6 +106,7 @@ void get_flight_info(struct flight *flight, int flight_number) {
 
   printf("Departure gate: ");
   scanf("%d", &flight->departure_gate);
+  /* Get the time of arrival */
   flight->arrival_time = get_time("arrival");
 
   /* Check if the flight is European or American */
@@ -158,8 +126,6 @@ void get_flight_info(struct flight *flight, int flight_number) {
   printf("\n");
 }
 
-/* Get the time for a flight. Either the time of departure or the time of
- * arrival */
 time_t get_time(char *time_name) {
   int day, month, year;      /* The date to store */
   int hour, minute, seconds; /* The hour, minute and seconds to store */
@@ -184,15 +150,15 @@ time_t get_time(char *time_name) {
   return time;
 }
 
-/* Print the sequence of flights */
 void print_sequence_of_flights(const struct sequence_of_flights *sequence) {
   /* Print the information of each flight */
   for (int i = 0; i < sequence->num_flights; i++) {
+    printf("Flight %d\n", i + 1);
     print_flight_info(&sequence->flights[i], i);
+    printf("\n");
   }
 }
 
-/* Print the information of a flight */
 void print_flight_info(const struct flight *flight, int flight_number) {
   /* Format:
    * Flight <flight_number>
@@ -209,10 +175,10 @@ void print_flight_info(const struct flight *flight, int flight_number) {
 
   /* Store the class of the flight */
   switch (flight->flight_class) {
-  case ECONOMY:
+  case ECON:
     class_str = "ECON";
     break;
-  case BUSINESS:
+  case BUS:
     class_str = "BUS";
     break;
   case FIRST:
@@ -222,20 +188,15 @@ void print_flight_info(const struct flight *flight, int flight_number) {
     class_str = "Unknown";
   }
 
-  /* Remove the trailing newline character */
-  departure_time_str = ctime(&flight->departure_time);
-  departure_time_str[strcspn(departure_time_str, "\n")] = 0;
-
-  /* Remove the trailing newline character */
-  arrival_time_str = ctime(&flight->arrival_time);
-  arrival_time_str[strcspn(arrival_time_str, "\n")] = 0;
-
-  printf("Flight %d\n", flight_number + 1);
   printf("%s\t%s\t%s\t%s\t%s\n", "Departure", "Arrival", "Flight Code", "Class",
          "Seat");
   printf("%s\t\t%s\t%s\t\t%s\t%s\n", flight->origin, flight->destination,
          flight->flight_code, class_str, flight->airplane_seat);
   printf("%s\t\t\t%s\n", "Departure time", "Departure gate");
+
+  /* Remove the trailing newline character in the time of departure */
+  departure_time_str = ctime(&flight->departure_time);
+  departure_time_str[strcspn(departure_time_str, "\n")] = 0;
 
   /* Check if the flight is European or American */
   if (flight_number % 2 == 0) {
@@ -249,6 +210,10 @@ void print_flight_info(const struct flight *flight, int flight_number) {
   }
 
   printf("%s\t\t\t%s\n", "Arrival time", "Arrival gate");
+
+  /* Remove the trailing newline character in the time of arrival */
+  arrival_time_str = ctime(&flight->arrival_time);
+  arrival_time_str[strcspn(arrival_time_str, "\n")] = 0;
 
   if (flight_number % 2 == 0) {
     /* The flight departs from America and arrives in Europe */
