@@ -5,8 +5,8 @@
  * of Pikachu.
  */
 
-#include "ascii.h" // Ascii art macros
-#include <stdio.h> // printf
+#include "ascii.h" /* Ascii art macros */
+#include <stdio.h> /* printf */
 
 void print_ascii(int relationship) {
   switch (relationship) {

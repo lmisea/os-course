@@ -32,40 +32,41 @@ PROGRAMS   = $(BIN_DIR)/comic.out \
 .PHONY: all clean
 
 # Default rule
-all: $(BIN_DIR) $(BUILD_DIR) $(PROGRAMS)
+all: $(PROGRAMS)
 
 # Make clean rule
 clean:
+	@echo "Cleaning up..."
 	rm -rf $(BUILD_DIR)
 	rm -rf $(BIN_DIR)
 
 # Rules for creating the executables
 
-$(BIN_DIR)/comic.out: $(BUILD_DIR)/comic.o
-	$(LINK) $@ $^
+$(BIN_DIR)/comic.out: $(BUILD_DIR)/comic.o $(BIN_DIR)
+	$(LINK) $@ $<
 
-$(BIN_DIR)/calculator.out: $(BUILD_DIR)/calculator.o
-	$(LINK) $@ $^
+$(BIN_DIR)/calculator.out: $(BUILD_DIR)/calculator.o $(BIN_DIR)
+	$(LINK) $@ $<
 
-$(BIN_DIR)/minimal.out: $(BUILD_DIR)/minimal.o
-	$(LINK) $@ $^
+$(BIN_DIR)/minimal.out: $(BUILD_DIR)/minimal.o $(BIN_DIR)
+	$(LINK) $@ $<
 
-$(BIN_DIR)/pause.out: $(BUILD_DIR)/pause.o
-	$(LINK) $@ $^
+$(BIN_DIR)/pause.out: $(BUILD_DIR)/pause.o $(BIN_DIR)
+	$(LINK) $@ $<
 
 # Rules for creating the object files
 
-$(BUILD_DIR)/comic.o: $(SRC_DIR)/comic.c
-	$(COMPILE) $^ -o $@
+$(BUILD_DIR)/comic.o: $(SRC_DIR)/comic.c $(BUILD_DIR)
+	$(COMPILE) $< -o $@
 
-$(BUILD_DIR)/calculator.o: $(ASSIGN_DIR)/calculator.c
-	$(COMPILE) $^ -o $@
+$(BUILD_DIR)/calculator.o: $(ASSIGN_DIR)/calculator.c $(BUILD_DIR)
+	$(COMPILE) $< -o $@
 
-$(BUILD_DIR)/minimal.o: $(SRC_DIR)/minimal.c
-	$(COMPILE) -ansi $^ -o $@
+$(BUILD_DIR)/minimal.o: $(SRC_DIR)/minimal.c $(BUILD_DIR)
+	$(COMPILE) -ansi $< -o $@
 
-$(BUILD_DIR)/pause.o: $(SRC_DIR)/pause.c
-	$(COMPILE) $^ -o $@
+$(BUILD_DIR)/pause.o: $(SRC_DIR)/pause.c $(BUILD_DIR)
+	$(COMPILE) $< -o $@
 
 # Rules for creating the directories
 

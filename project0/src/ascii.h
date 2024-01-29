@@ -172,4 +172,4 @@ void print_eating_ascii();
  */
 void print_surprised_ascii();
 
-#endif // ASCII_H
+#endif /* ASCII_H */

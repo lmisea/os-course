@@ -4,7 +4,7 @@
 CC          = gcc
 
 # Compiler command for object files
-COMPILE     = $(CC) -c
+COMPILE     = $(CC) -c -ansi
 
 # Linker command for creating executables
 LINK        = $(CC) -o
@@ -29,7 +29,7 @@ BUILD_FILES = $(BUILD_DIR)/ascii.o $(BUILD_DIR)/pokemon.o
 .PHONY: all clean
 
 # Default rule
-all: $(BIN_DIR) $(BUILD_DIR) $(PROGRAM)
+all: $(PROGRAM)
 
 # Make clean rule
 clean:
@@ -39,21 +39,21 @@ clean:
 
 # Rule for creating the executable file for the project
 
-$(BIN_DIR)/pokemon.out: $(BUILD_FILES)
+$(BIN_DIR)/pokemon.out: $(BIN_DIR) $(BUILD_FILES)
 	@echo "Linking object files..."
-	$(LINK) $@ $^
+	$(LINK) $@ $(BUILD_FILES)
 	@echo "Done."
 	@echo "Run the program by executing: ./$(BIN_DIR)/pokemon.out"
 
 # Rules for creating the object files
 
-$(BUILD_DIR)/ascii.o: $(SRC_DIR)/ascii.c $(SRC_DIR)/ascii.h
+$(BUILD_DIR)/ascii.o: $(SRC_DIR)/ascii.c $(SRC_DIR)/ascii.h $(BUILD_DIR)
 	@echo "Compiling ascii.c..."
 	$(COMPILE) $< -o $@
 
-$(BUILD_DIR)/pokemon.o: $(SRC_DIR)/pokemon.c
+$(BUILD_DIR)/pokemon.o: $(SRC_DIR)/pokemon.c $(BUILD_DIR)
 	@echo "Compiling pokemon.c..."
-	$(COMPILE) $^ -o $@
+	$(COMPILE) $< -o $@
 
 # Rules for creating the directories
 
