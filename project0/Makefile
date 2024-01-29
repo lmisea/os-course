@@ -22,7 +22,7 @@ SRC_DIR     = src
 PROGRAM     = $(BIN_DIR)/pokemon.out
 
 # Specify the name of all the object files that will be created.
-BUILD_FILES = $(BUILD_DIR)/ascii.o $(BUILD_DIR)/pokemon.o
+BUILD_FILES = $(BUILD_DIR)/actions.o $(BUILD_DIR)/ascii.o $(BUILD_DIR)/pokemon.o
 
 # Allow make all and make clean to be executed even if there is a file
 # named 'all' or 'clean'.
@@ -46,6 +46,10 @@ $(BIN_DIR)/pokemon.out: $(BIN_DIR) $(BUILD_FILES)
 	@echo "Run the program by executing: ./$(BIN_DIR)/pokemon.out"
 
 # Rules for creating the object files
+
+$(BUILD_DIR)/actions.o: $(SRC_DIR)/actions.c $(SRC_DIR)/actions.h $(BUILD_DIR)
+	@echo "Compiling actions.c..."
+	$(COMPILE) $< -o $@
 
 $(BUILD_DIR)/ascii.o: $(SRC_DIR)/ascii.c $(SRC_DIR)/ascii.h $(BUILD_DIR)
 	@echo "Compiling ascii.c..."

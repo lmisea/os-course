@@ -5,7 +5,9 @@
  * function.
  */
 
-#include "ascii.h"  /* Ascii art macros */
+#include "actions.h" /* Actions enum and get_action function */
+#include "ascii.h"   /* Ascii art macros */
+
 #include <stdio.h>  /* printf */
 #include <stdlib.h> /* EXIT_SUCCESS */
 
@@ -13,69 +15,39 @@ int main(int argc, char const *argv[]) {
   /* Start a relationship with Pikachu */
   int relationship = 0;
 
-  /* Support variables*/
-  int i;
-  char action[10];
+  /* Print the ascii art corresponding to the relationship */
+  print_ascii(relationship);
 
-  /* Player actions */
-  char *actions_player[] = {"Time\n", "Watts\n", "Shop\n", "Pikachu\n", "Play\n", "Back\n"};
+  /* Prompt the user to choose an action */
+  switch (get_action()) {
+  case TIME:
+    printf("Se ha detectado la accion Time\n");
+    break;
 
-  do {
-    /* Print the initial ascii art */
-    print_ascii(relationship);
-    printf("Relationship: %d\n", relationship);
+  case WATTS:
+    printf("Se ha detectado la accion Watts\n");
+    break;
 
-    /* Print the actions*/
-    for (i = 0; i < sizeof(actions_player)/sizeof(actions_player[0]) -1; i++)
-    {
-      printf("%d) %s", i+1, *(actions_player+i));
-    }
+  case SHOP:
+    printf("Se ha detectado la accion Shop\n");
+    break;
 
-    i = 0;
-    /* Take a action */
-    printf("Enter your action: ");
-    
-    /* Label repeat, it is used for the invalid case*/
-  repeat:
-    fgets(action, sizeof(action), stdin);
-    
-    if (strcmp(action, actions_player[0]) == 0) {
+  case PIKACHU:
+    printf("Se ha detectado la accion Pikachu\n");
+    break;
 
-      printf("Se ha detectado la accion Time\n");
+  case PLAY:
+    printf("Se ha detectado la accion Play\n");
+    break;
 
-    } else if(strcmp(action, actions_player[1]) == 0) {
+  case BACK:
+    printf("Pikachu says goodbye.\n");
+    return EXIT_SUCCESS;
 
-      printf("Se ha detectado la accion Watts\n");
-
-    } else if(strcmp(action, actions_player[2]) == 0) {
-
-      printf("Se ha detectado la accion Shop\n");
-
-    } else if(strcmp(action, actions_player[3]) == 0) {
-
-      printf("Se ha detectado la accion Pikachu\n");
-
-    } else if(strcmp(action, actions_player[4]) == 0) {
-
-      printf("Se ha detectado la accion Play\n");
-
-    } else if(strcmp(action, actions_player[5]) == 0) {
-
-      printf("Se ha detectado la accion Back\n");
-      continue;
-
-    } else {
-      printf("Action Invalid\n");
-      printf("Please enter a valid action: ");
-      i++;
-      if(i == 5) {
-        break;
-      }
-      goto repeat;
-    }
-
-  } while (strcmp(action, actions_player[5]) != 0);
+  default:
+    printf("Se ha detectado la accion Time\n");
+    break;
+  }
 
   return EXIT_SUCCESS;
 }
-

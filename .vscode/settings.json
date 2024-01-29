@@ -1,4 +1,4 @@
 {
-  // This is for ignoring the READCHAR word with the spell checker
+  // This is for ignoring the spell check for the words in the array
   "cSpell.words": ["Pikachu", "pokemon", "READCHAR"]
 }
