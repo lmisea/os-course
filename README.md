@@ -24,7 +24,7 @@ The repository is structured as follows:
   - `project1`: Contains the code for the second project.
   - `project2`: Contains the code for the third project.
 
-    The projects are structured in the same way as the labs with a `bin`, `build`, and `src` folder, along with a `Makefile` at the root of the project folder.
+    The projects are structured in the same way as the labs with a `bin`, `build`, and `src` folder. At the root of the project folder there is a `Makefile`, a `.pdf` file with the project statement and the `README.md` file
 
 ### Tree-like folder structure
 
