@@ -34,10 +34,28 @@ void print_actions(char *actions[]);
  *
  * @param action The action that the user wants to do.
  * @param actions The actions array.
- *
+ * @param cota The array legth.
+ * 
  * @return The index of the action that the user wants to do.
  * @return -1 if the action is not valid.
  */
-int get_action_index(char *action, char *actions[]);
+int get_index(char *action, char *actions[], int cota);
+
+/**
+ * @brief This function converts the word to lowercase and uppercase.
+ *
+ * @param word The word that the user wants to check.
+ * 
+ */
+void check_word(char *word);
+
+/**
+ * @brief This function print a word until you get a \n
+ *
+ * @param index Position of the word in the arrangement.
+ * @param objects Arrangement with the words to print.
+ * 
+ */
+void print_letter(int index, char*objects[]);
 
 #endif /* ACTIONS_H */

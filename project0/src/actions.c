@@ -11,6 +11,7 @@
 
 #include <stdio.h>  /* printf, fgets, stdin */
 #include <string.h> /* strcmp */
+#include <ctype.h> /* toLower */
 
 enum Actions get_action() {
   int tries = 0;   /* Number of tries */
@@ -34,8 +35,8 @@ enum Actions get_action() {
     fgets(action, sizeof(action), stdin);
 
     /* Check if the action is valid */
-    if (get_action_index(action, actions) != -1) {
-      return get_action_index(action, actions);
+    if (get_index(action, actions, NUM_ACTIONS) != -1) {
+      return get_index(action, actions, NUM_ACTIONS);
     } else {
       printf("Action Invalid\n");
       printf("Please enter a valid action: ");
@@ -59,14 +60,39 @@ void print_actions(char *actions[]) {
   }
 }
 
-int get_action_index(char *action, char *actions[]) {
+int get_index(char *action, char *actions[], int cota) {
   int i; /* Iterator */
-
+  
+  check_word(action);
   /* Search the action in the actions array */
-  for (i = 0; i < NUM_ACTIONS; i++) {
+  for (i = 0; i < cota; i++) {
     if (strcmp(action, actions[i]) == 0) {
       return i;
     }
   }
   return -1; /* The action is not valid */
+}
+
+void check_word(char *word) {
+  int i; /* Iterator */
+
+  /* Eliminates inconveniences with upper and lower case */
+  for (i = 0; *(word+i) != '\n'; i++) {
+    if (i == 0) {
+      *(word+i) = toupper(*(word+i));
+    } else {
+      *(word+i) = tolower(*(word+i));
+    }
+  }
+}
+
+void print_letter(int index, char*objects[]) {
+  /* Word to print */
+  char* letter = objects[index];
+
+  /* Letter by letter printing */
+  while (*letter != '\n') { 
+      printf("%c", *letter); 
+      letter++; 
+  }
 }
