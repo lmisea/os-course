@@ -11,7 +11,7 @@ int main() {
 #if defined(WINDOWS) || defined(_WIN32) || defined(_WIN64)
   system("pause");
 #else
-  printf("Press any key to continue . . .");
+  printf("Enter any key to continue . . .");
   fflush(stdout);
   getchar();
 #endif

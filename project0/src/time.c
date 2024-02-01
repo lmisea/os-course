@@ -5,8 +5,8 @@
  * and contains the function to display the time of the game.
  */
 
-#include "time.h" /* print_time, get_active_time */
-#include <time.h> /* time_t, difftime, time, localtime, struct tm */
+#include "time.h" /* Functions to display the time the game has been active */
+#include <time.h> /* time_t, difftime, time */
 
 #include <stdio.h> /* printf */
 

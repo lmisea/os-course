@@ -23,7 +23,7 @@ void get_shop(int *relationship, int *balance, struct Nodo **head,
 repeat:
   show_the_store(objects); /* Show the items*/
   do {
-    printf("You want to buy a product[Y/N]: ");
+    printf("Do you want to buy a gift? [y/N]: ");
 
   repeatQuestion:
     fgets(buyer, sizeof(buyer), stdin); /* Ask if you want to buy */
@@ -52,7 +52,7 @@ void show_the_store(char *objects[]) {
   int i;
   int j;
   printf("*||||||||||||||||||||||||||||||||||||*\n");
-  printf("* Regalos       ||Precio    ||Efecto *\n");
+  printf("* Gifts         ||Price     ||Effect *\n");
   for (i = 0; i < 9; i++) {
     printf("* ");
     print_letter(i, objects); /* Print an object */
@@ -65,9 +65,9 @@ void show_the_store(char *objects[]) {
     }
     /* Shows its price and the effect on pikachu */
     if (i <= 5) {
-      printf("||%d Watts ||+%d   *\n", PRICE(i), EFECT(i));
+      printf("||%d Watts ||+%d   *\n", PRICE(i), EFFECT(i));
     } else {
-      printf("||%d Watts ||+%d  *\n", PRICE(i), EFECT(i));
+      printf("||%d Watts ||+%d  *\n", PRICE(i), EFFECT(i));
     }
   }
   printf("*||||||||||||||||||||||||||||||||||||*\n");
@@ -84,7 +84,7 @@ void buy_object(int *relationship, char *objects[], int *balance,
   do {
     i = 0;
     /* Ask the item to buy */
-    printf("Insert the name of the object: ");
+    printf("Enter the name of the object: ");
     fgets(name_object, sizeof(name_object), stdin);
 
     /* Eliminate lowercase and uppercase letters */
@@ -106,13 +106,13 @@ void buy_object(int *relationship, char *objects[], int *balance,
       /* The object was obtained */
       if (*balance - PRICE(i) < 0) {
         /* You don't have enough money to buy it */
-        printf("Balance insuficient\n");
+        printf("You don't have enough watts to buy it.\n");
         break;
       } else {
         /* You have enough money to buy it */
         /* Update the values and the list */
         *balance = *balance - PRICE(i);
-        *relationship = EFECT(i) + *relationship;
+        *relationship = EFFECT(i) + *relationship;
         insertNodo(i, head);
         printf("Successfully purchased item\n");
         printf("\n");

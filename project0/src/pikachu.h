@@ -7,6 +7,7 @@
 
 #ifndef PIKACHU_H
 #define PIKACHU_H
+
 #define STATUS                                                                 \
   "\
                $$                  $$                        \n\

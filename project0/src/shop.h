@@ -1,14 +1,14 @@
 /**
  * @file shop.h
  *
- * @brief This file contains the function, prices and efect of the store.
+ * @brief This file contains the functions to see the store and buy objects.
  */
 
 #ifndef SHOP_H
 #define SHOP_H
 
-#define PRICE(p) (100 + (p * 100)) /* Price of the object*/
-#define EFECT(e) (100 + (e * 150)) /* Efect of the object*/
+#define PRICE(p) (100 + (p * 100))  /* Price of the object*/
+#define EFFECT(e) (100 + (e * 150)) /* Effect of the object*/
 #define NUM_OBJECTS 9
 #define STORE                                                                  \
   "\

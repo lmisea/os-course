@@ -8,9 +8,10 @@
 #include "actions.h"    /* Actions enum and get_action function */
 #include "ascii.h"      /* Ascii art macros */
 #include "linkedList.h" /* List of purchased items*/
+#include "pause.h"      /* Function to pause the execution of the program */
 #include "pikachu.h"    /* Teach the relationship and list of pikachu */
 #include "shop.h"       /* Shop database and function */
-#include "time.h"       /* print_time, get_active_time */
+#include "time.h"       /* Function to display the active time of the game */
 
 #include <stdio.h>  /* printf */
 #include <stdlib.h> /* EXIT_SUCCESS */
@@ -34,10 +35,12 @@ int main(int argc, char const *argv[]) {
     switch (get_action()) {
     case TIME:
       print_time(start_time);
+      wait_for_key();
       break;
 
     case WATTS:
       printf("Se ha detectado la accion Watts\n");
+      wait_for_key();
       break;
 
     case SHOP:
@@ -46,10 +49,12 @@ int main(int argc, char const *argv[]) {
 
     case PIKACHU:
       get_pikachu(&relationship, &balance, head, objects);
+      wait_for_key();
       break;
 
     case PLAY:
       printf("Se ha detectado la accion Play\n");
+      wait_for_key();
       break;
 
     case BACK:
@@ -57,9 +62,8 @@ int main(int argc, char const *argv[]) {
       return EXIT_SUCCESS;
 
     default:
-      printf("Se ha detectado la accion Time\n");
       break;
     }
-  } while (relationship != 1);
+  } while (relationship != -1);
   return EXIT_SUCCESS;
 }
