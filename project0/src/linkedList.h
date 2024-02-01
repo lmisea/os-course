@@ -10,9 +10,9 @@
 /**
  * @brief This struct contains stucture of the nodo.
  */
-struct Nodo {
+struct Node {
   int index;
-  struct Nodo *nextNodo;
+  struct Node *next_node;
 };
 
 /**
@@ -21,7 +21,7 @@ struct Nodo {
  * @param index Position in the list of objects
  * @param head_reference List Head Pointer Pointer.
  */
-void insertNodo(int index, struct Nodo **head_reference);
+void insert_node(int index, struct Node **head_reference);
 
 /**
  * @brief Shows list items
@@ -29,7 +29,7 @@ void insertNodo(int index, struct Nodo **head_reference);
  * @param head_reference List Head Pointer .
  * @param objects Arrangement with available objects.
  */
-void toString(struct Nodo *head_refence, char *objects[]);
+void print_object_list(struct Node *head_refence, char *objects[]);
 
 /**
  * @brief Indicates how many elements are in the list
@@ -37,7 +37,7 @@ void toString(struct Nodo *head_refence, char *objects[]);
  * @param head_reference List Head Pointer .
  * @return Return how many elements there are.
  */
-int countList(struct Nodo *head_refence);
+int count_list(struct Node *head_reference);
 
 /**
  * @brief Shows the store and asks if you want to buy
@@ -47,6 +47,6 @@ int countList(struct Nodo *head_refence);
  *
  *  @return Returns the position of the element in the object array.
  */
-int searchNodo(int cota, struct Nodo *head_refence);
+int search_node(int cota, struct Node *head_refence);
 
 #endif /* LIST_H */

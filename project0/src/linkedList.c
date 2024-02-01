@@ -4,57 +4,57 @@
  * @brief This file contains the functions of linked list.
  */
 
-#include "linkedList.h" /* struct Nodo*/
+#include "linkedList.h" /* struct Node*/
 #include "actions.h"    /* print_letter()*/
 
 #include <stdio.h>  /* printf */
 #include <stdlib.h> /* NULL */
 
-void insertNodo(int index, struct Nodo **head_reference) {
+void insert_node(int index, struct Node **head_reference) {
 
   /* Create a space in memory to store the new node */
-  struct Nodo *new_nodo = (struct Nodo *)malloc(sizeof(struct Nodo));
+  struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
 
   /* Enter the values of the new node */
-  new_nodo->index = index;
-  new_nodo->nextNodo = (*head_reference);
+  new_node->index = index;
+  new_node->next_node = (*head_reference);
 
   /* Change the head to the entered node */
-  (*head_reference) = new_nodo;
+  (*head_reference) = new_node;
 }
 
-void toString(struct Nodo *head_refence, char *objects[]) {
-  struct Nodo *p = head_refence;
+void print_object_list(struct Node *head_refence, char *objects[]) {
+  struct Node *p = head_refence;
   printf("These are the gifts given: { ");
 
   /* Print each node until one points to null */
   while (p != NULL) {
     print_letter(p->index, objects);
     printf(" ");
-    p = p->nextNodo;
+    p = p->next_node;
   }
   printf("}\n");
 }
 
-int countList(struct Nodo *head_refence) {
+int count_list(struct Node *head_refence) {
   int count = 0;
-  struct Nodo *p = head_refence;
+  struct Node *p = head_refence;
 
   /* Count each node until one points to null */
   while (p != NULL) {
     count++;
-    p = p->nextNodo;
+    p = p->next_node;
   }
   return count;
 }
 
-int searchNodo(int cota, struct Nodo *head_refence) {
+int search_node(int cota, struct Node *head_refence) {
   int i;
   int identifier; /* Will contain the index in the array*/
-  struct Nodo *p = head_refence;
+  struct Node *p = head_refence;
   for (i = 0; i < cota; i++) {
     identifier = p->index;
-    p = p->nextNodo;
+    p = p->next_node;
   }
   return identifier;
 }

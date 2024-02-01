@@ -45,7 +45,6 @@ int get_index(char *action, char *actions[], int cota);
  * @brief This function converts the word to lowercase and uppercase.
  *
  * @param word The word that the user wants to check.
- *
  */
 void check_word(char *word);
 
@@ -54,7 +53,6 @@ void check_word(char *word);
  *
  * @param index Position of the word in the arrangement.
  * @param objects Arrangement with the words to print.
- *
  */
 void print_letter(int index, char *objects[]);
 

@@ -12,14 +12,14 @@
 #include <stdio.h>  /* printf, fgets, stdin */
 #include <string.h> /* strcmp */
 
-void get_pikachu(int *relationship, int *balance, struct Nodo *head,
+void get_pikachu(int *relationship, int *balance, struct Node *head,
                  char *objects[]) {
   *balance = *balance + 10;
   printf("\n%s", STATUS);
   printf("\nYour current relationship with Pikachu is: %d\n", *relationship);
   printf("Pikachu is ");
   feelings(*relationship);
-  toString(head, objects);
+  print_object_list(head, objects);
   printf("\n");
 }
 

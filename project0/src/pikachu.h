@@ -27,7 +27,7 @@
  * @param head List of purchased gifts.
  * @param objects Store items.
  */
-void get_pikachu(int *relationship, int *balance, struct Nodo *head,
+void get_pikachu(int *relationship, int *balance, struct Node *head,
                  char *objects[]);
 
 /**

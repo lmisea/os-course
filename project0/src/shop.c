@@ -6,26 +6,30 @@
 #include "linkedList.h" /* List of purchased items*/
 
 #include "actions.h" /* check_word */
+#include "pause.h"   /* Function to pause the execution of the program */
 #include "shop.h"    /* Ascii art macros */
+#include "watts.h"   /* Functions to update the balance of the player */
 
 #include <stdio.h>  /* printf */
 #include <stdlib.h> /* EXIT_SUCCESS */
 #include <string.h> /* strlen, strcmp */
+#include <time.h>   /* time_t */
 
-void get_shop(int *relationship, int *balance, struct Nodo **head,
-              char *objects[]) {
-  *balance = *balance + 10;
+void get_shop(int *relationship, int *balance, struct Node **head,
+              char *objects[], time_t *last_checked_time) {
   char buyer[6]; /*Player's word*/
 
   printf("\n");
   printf("%s", STORE);
 
 repeat:
-  show_the_store(objects); /* Show the items*/
+  add_time_to_watts(last_checked_time, balance); /* Update the balance */
+  show_the_store(objects);                       /* Show the items*/
+  printf("Watts balance: %d\n", *balance);       /* Show the balance*/
   do {
     printf("Do you want to buy a gift? [y/N]: ");
 
-  repeatQuestion:
+  repeat_question:
     fgets(buyer, sizeof(buyer), stdin); /* Ask if you want to buy */
     check_word(buyer);                  /* Check if I accept or not */
 
@@ -42,7 +46,7 @@ repeat:
       /* Invalid word */
       printf("Invalid answer\n");
       printf("Try again: ");
-      goto repeatQuestion; /* Give it one more try */
+      goto repeat_question; /* Give it one more try */
     }
   } while (1);
 }
@@ -75,8 +79,8 @@ void show_the_store(char *objects[]) {
 }
 
 void buy_object(int *relationship, char *objects[], int *balance,
-                struct Nodo **head) {
-  /* Iterator */
+                struct Node **head) {
+  /* Iterators */
   int i;
   int j = 0;
   /* Object you want to buy */
@@ -106,15 +110,18 @@ void buy_object(int *relationship, char *objects[], int *balance,
       /* The object was obtained */
       if (*balance - PRICE(i) < 0) {
         /* You don't have enough money to buy it */
-        printf("You don't have enough watts to buy it.\n");
+        printf("\nYou don't have enough watts to buy it.\n");
+        wait_for_key(); /* Wait for the user to press a key */
+        printf("\n");
         break;
       } else {
         /* You have enough money to buy it */
         /* Update the values and the list */
-        *balance = *balance - PRICE(i);
+        decrease_watts(PRICE(i), balance);
         *relationship = EFFECT(i) + *relationship;
-        insertNodo(i, head);
-        printf("Successfully purchased item\n");
+        insert_node(i, head);
+        printf("\nSuccessfully purchased item.\n");
+        wait_for_key(); /* Wait for the user to press a key */
         printf("\n");
         break;
       }

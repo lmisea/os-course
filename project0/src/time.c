@@ -10,8 +10,8 @@
 
 #include <stdio.h> /* printf */
 
-void print_time(time_t start_time) {
-  time_t time_active = get_active_time(start_time);
+void print_time(time_t *start_time) {
+  time_t time_active = get_time_difference(start_time);
 
   /* Convert the time to hours, minutes and seconds */
   int hours = time_active / 3600;
@@ -23,7 +23,11 @@ void print_time(time_t start_time) {
       hours, minutes, seconds);
 }
 
-time_t get_active_time(time_t start_time) {
+time_t get_time_difference(time_t *time_to_compare) {
   time_t current_time = time(NULL);
-  return difftime(current_time, start_time);
+  return difftime(current_time, *time_to_compare);
+}
+
+void update_last_checked_time(time_t *last_checked_time) {
+  *last_checked_time = time(NULL);
 }
