@@ -29,7 +29,7 @@ void insert_node(int index, struct Node **head_reference);
  * @param head_reference List Head Pointer .
  * @param objects Arrangement with available objects.
  */
-void print_object_list(struct Node *head_refence, char *objects[]);
+void print_object_list(struct Node *head_reference, char *objects[]);
 
 /**
  * @brief Indicates how many elements are in the list
@@ -45,8 +45,8 @@ int count_list(struct Node *head_reference);
  * @param cota Indicates how far to search.
  * @param head_reference List Head Pointer .
  *
- *  @return Returns the position of the element in the object array.
+ * @return Returns the position of the element in the object array.
  */
-int search_node(int cota, struct Node *head_refence);
+int search_node(int cota, struct Node *head_reference);
 
 #endif /* LIST_H */

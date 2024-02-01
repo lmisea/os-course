@@ -6,7 +6,7 @@
  */
 
 #include "pause.h" /* wait_for_key */
-#include <stdio.h> /* printf, fflush, getchar */
+#include <stdio.h> /* printf, fflush, getchar, stdin, stdout */
 
 void wait_for_key() {
   /* The #if directive allows is used to conditionally compile code. */
@@ -15,6 +15,12 @@ void wait_for_key() {
 #else
   printf("Press enter to continue . . .");
   fflush(stdout);
-  getchar();
+  clear_input_buffer();
 #endif
+}
+
+void clear_input_buffer(void) {
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF) {
+  }
 }

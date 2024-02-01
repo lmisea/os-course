@@ -13,4 +13,9 @@
  */
 void wait_for_key(void);
 
+/**
+ * @brief Clear the input buffer.
+ */
+void clear_input_buffer(void);
+
 #endif /* PAUSE_H */

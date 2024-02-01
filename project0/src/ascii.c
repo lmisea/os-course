@@ -34,4 +34,6 @@ void print_ascii(int relationship) {
 
 void print_eating_ascii() { printf("%s", PIKACHU_EATING); }
 
-void print_surprised_ascii() { printf("%s", SURPRISED_PIKACHU); }
+void print_victory_ascii() { printf("%s", PIKACHU_WON); }
+
+void print_defeat_ascii() { printf("%s", PIKACHU_LOST); }
