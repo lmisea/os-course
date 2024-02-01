@@ -9,9 +9,9 @@
 #include "actions.h" /* Actions enum and function prototypes */
 #include "ascii.h"   /* Ascii art macros */
 
+#include <ctype.h>  /* toLower */
 #include <stdio.h>  /* printf, fgets, stdin */
 #include <string.h> /* strcmp */
-#include <ctype.h> /* toLower */
 
 enum Actions get_action() {
   int tries = 0;   /* Number of tries */
@@ -62,7 +62,7 @@ void print_actions(char *actions[]) {
 
 int get_index(char *action, char *actions[], int cota) {
   int i; /* Iterator */
-  
+
   check_word(action);
   /* Search the action in the actions array */
   for (i = 0; i < cota; i++) {
@@ -77,22 +77,22 @@ void check_word(char *word) {
   int i; /* Iterator */
 
   /* Eliminates inconveniences with upper and lower case */
-  for (i = 0; *(word+i) != '\n'; i++) {
+  for (i = 0; *(word + i) != '\n'; i++) {
     if (i == 0) {
-      *(word+i) = toupper(*(word+i));
+      *(word + i) = toupper(*(word + i));
     } else {
-      *(word+i) = tolower(*(word+i));
+      *(word + i) = tolower(*(word + i));
     }
   }
 }
 
-void print_letter(int index, char*objects[]) {
+void print_letter(int index, char *objects[]) {
   /* Word to print */
-  char* letter = objects[index];
+  char *letter = objects[index];
 
   /* Letter by letter printing */
-  while (*letter != '\n') { 
-      printf("%c", *letter); 
-      letter++; 
+  while (*letter != '\n') {
+    printf("%c", *letter);
+    letter++;
   }
 }
