@@ -10,15 +10,17 @@
 #include "linkedList.h" /* List of purchased items*/
 #include "pikachu.h"    /* Teach the relationship and list of pikachu */
 #include "shop.h"       /* Shop database and function */
+#include "time.h"       /* print_time, get_active_time */
 
 #include <stdio.h>  /* printf */
 #include <stdlib.h> /* EXIT_SUCCESS */
+#include <time.h>   /* time_t */
 
 int main(int argc, char const *argv[]) {
-
-  int relationship = 0;     /* Start a relationship with Pikachu */
-  int balance = 1000;       /* Start your balance */
-  struct Nodo *head = NULL; /* Start the gift list */
+  int relationship = 0;           /* Start a relationship with Pikachu */
+  time_t start_time = time(NULL); /* Start the time */
+  int balance = 1000;             /* Start the balance */
+  struct Nodo *head = NULL;       /* Start the gift list */
   /* Start the objects list */
   char *objects[] = {"Baya\n",         "Bayamarga\n",      "Pokeball\n",
                      "Antiparabaya\n", "Baya misterio\n",  "Baya milagro\n",
@@ -31,7 +33,7 @@ int main(int argc, char const *argv[]) {
 
     switch (get_action()) {
     case TIME:
-      printf("Se ha detectado la accion Time\n");
+      print_time(start_time);
       break;
 
     case WATTS:
