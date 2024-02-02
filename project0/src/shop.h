@@ -34,10 +34,10 @@
  * @param relationship Relationship with Pikachu.
  * @param balance Watts balance.
  * @param given_gifts List of gifts given to Pikachu.
- * @param last_checked_time Last time the watts balance was updated.
+ * @param last_update_time Last time the game status was updated.
  */
 void go_to_shop(int *relationship, int *balance,
-                struct linked_list *given_gifts, time_t *last_checked_time);
+                struct linked_list *given_gifts, time_t *last_update_time);
 
 /**
  * @brief Shows the table of items, prices and effects.
@@ -60,8 +60,10 @@ void print_item(char *item);
  * @param balance The balance you have.
  * @param given_gifts List of gifts given to pikachu.
  * @param items Array of items in the store.
+ * @param last_update_time Last time the game status was updated.
  */
 void buy_object(int *relationship, int *balance,
-                struct linked_list *given_gifts, char *items[]);
+                struct linked_list *given_gifts, char *items[],
+                time_t *last_update_time);
 
 #endif /* SHOP_H */

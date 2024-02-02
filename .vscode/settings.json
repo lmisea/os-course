@@ -1,4 +1,11 @@
 {
   // This is for ignoring the spell check for the words in the array
-  "cSpell.words": ["pikachu", "Pikachu", "pokemon", "pokeshop", "READCHAR"]
+  "cSpell.words": [
+    "pikachu",
+    "Pikachu",
+    "pokeball",
+    "pokemon",
+    "pokeshop",
+    "READCHAR"
+  ]
 }

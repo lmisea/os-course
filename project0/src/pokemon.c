@@ -6,17 +6,18 @@
  */
 
 #include "actions.h"    /* Actions enum and get_action function */
-#include "ascii.h"      /* Ascii art macros */
+#include "ascii.h"      /* ASCII art macros */
 #include "linkedList.h" /* List of purchased items*/
 #include "pause.h"      /* Function to pause the execution of the program */
 #include "pikachu.h"    /* Teach the relationship and list of pikachu */
 #include "shop.h"       /* Shop database and function */
 #include "time.h"       /* Function to display the active time of the game */
-#include "watts.h"      /* Function to update the watts balance of the player */
+#include "update.h"     /* Function to update the watts balance and the
+                           relationship */
 
 #include <stdio.h>  /* printf */
 #include <stdlib.h> /* EXIT_SUCCESS */
-#include <time.h>   /* time_t */
+#include <time.h>   /* time_t, time */
 
 int main(int argc, char const *argv[]) {
   int relationship = 0;           /* Relationship with pikachu */
@@ -24,7 +25,7 @@ int main(int argc, char const *argv[]) {
   int balance = 0;                /* Watts balance */
   struct linked_list given_gifts; /* List of gifts given to Pikachu */
   initialize_list(&given_gifts);  /* Initialize the list */
-  /* Last time the watts balance was updated */
+  /* Last time the watts balance and the relationship were updated */
   time_t last_update_time = time(NULL);
 
   /* Prompt the user to choose an action */
@@ -41,19 +42,20 @@ int main(int argc, char const *argv[]) {
 
     case WATTS:
       increase_watts(10, &balance);
-      add_time_to_watts(&last_update_time, &balance);
+      update_game_status(&last_update_time, &balance, &relationship);
       print_watts(balance);
       wait_for_key();
       break;
 
     case SHOP:
       increase_watts(10, &balance);
-      add_time_to_watts(&last_update_time, &balance);
+      update_game_status(&last_update_time, &balance, &relationship);
       go_to_shop(&relationship, &balance, &given_gifts, &last_update_time);
       break;
 
     case PIKACHU:
       increase_watts(10, &balance);
+      update_game_status(&last_update_time, &balance, &relationship);
       print_pikachu_status(&relationship, &given_gifts);
       wait_for_key();
       break;

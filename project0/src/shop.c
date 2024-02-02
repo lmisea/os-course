@@ -6,9 +6,10 @@
 #include "linkedList.h" /* List of purchased items*/
 
 #include "actions.h" /* format_input */
+#include "ascii.h"   /* ASCII art macros */
 #include "pause.h"   /* Function to pause the execution of the program */
 #include "shop.h"    /* Ascii art macros */
-#include "watts.h"   /* Functions to update the balance of the player */
+#include "update.h"  /* Functions to update the balance of the player */
 
 #include <stdio.h>  /* printf */
 #include <stdlib.h> /* EXIT_SUCCESS */
@@ -16,7 +17,7 @@
 #include <time.h>   /* time_t */
 
 void go_to_shop(int *relationship, int *balance,
-                struct linked_list *given_gifts, time_t *last_checked_time) {
+                struct linked_list *given_gifts, time_t *last_update_time) {
   /*
    + Array of items in the store.
    * static is used to crate only one instance of the array
@@ -33,9 +34,10 @@ void go_to_shop(int *relationship, int *balance,
   printf("%s", STORE);
 
 repeat:
-  add_time_to_watts(last_checked_time, balance); /* Update the balance */
-  show_the_store(items);                         /* Show the items*/
-  printf("Watts balance: %d\n", *balance);       /* Show the balance*/
+  update_game_status(last_update_time, balance,
+                     relationship);        /* Update the game status */
+  show_the_store(items);                   /* Show the items*/
+  printf("Watts balance: %d\n", *balance); /* Show the balance*/
   do {
     printf("Do you want to buy a gift? [y/N]: ");
 
@@ -47,7 +49,7 @@ repeat:
 
     if (strcmp(user_choice, "Y\n") == 0) {
       /* Case where you accept */
-      buy_object(relationship, balance, given_gifts, items);
+      buy_object(relationship, balance, given_gifts, items, last_update_time);
       goto repeat; /* Show the store again */
     } else if (strcmp(user_choice, "N\n") == 0 ||
                strcmp(user_choice, "Back\n") == 0) {
@@ -91,14 +93,17 @@ void show_the_store(char *items[]) {
 }
 
 void buy_object(int *relationship, int *balance,
-                struct linked_list *given_gifts, char *items[]) {
+                struct linked_list *given_gifts, char *items[],
+                time_t *last_update_time) {
   /* Iterators */
   int i;
   int j = 0;
   /* Object you want to buy */
   char name_object[16];
+
   do {
     i = 0;
+
     /* Ask the item to buy */
     printf("Enter the name of the object: ");
     fgets(name_object, sizeof(name_object), stdin);
@@ -109,6 +114,9 @@ void buy_object(int *relationship, int *balance,
     if (strcmp(name_object, "Back\n") == 0) {
       break;
     }
+
+    update_game_status(last_update_time, balance,
+                       relationship); /* Update the game status */
 
     /* Check if the object is in the items array */
     while (i < NUM_OBJECTS) {
@@ -137,12 +145,18 @@ void buy_object(int *relationship, int *balance,
         /* You have enough money to buy it */
         /* Update the balance and the relationship */
         decrease_watts(PRICE(i), balance);
-        *relationship = EFFECT(i) + *relationship;
+        increase_relationship(EFFECT(i), relationship);
         /* Add the item to the given gifts list */
         insert_node(given_gifts, items[i]);
         /* Remove the \n from the name of the object */
         name_object[strlen(name_object) - 1] = '\0';
         printf("\nSuccessfully purchased %s.\n", name_object);
+        /* Print pikachu eating if the object is not a pokeball */
+        if (i != 2) {
+          print_eating_ascii();
+        }
+        /* Print the effect of the object */
+        printf("Effect: relationship +%d\n\n", EFFECT(i));
         wait_for_key(); /* Wait for the user to press a key */
         printf("\n");
         break;

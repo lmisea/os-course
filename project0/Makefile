@@ -24,7 +24,7 @@ PROGRAM     = $(BIN_DIR)/pokemon.out
 # Specify the name of all the object files that will be created.
 BUILD_FILES = $(BUILD_DIR)/pikachu.o $(BUILD_DIR)/linkedList.o $(BUILD_DIR)/shop.o \
 							$(BUILD_DIR)/actions.o $(BUILD_DIR)/ascii.o $(BUILD_DIR)/pokemon.o \
-							$(BUILD_DIR)/time.o $(BUILD_DIR)/pause.o $(BUILD_DIR)/watts.o \
+							$(BUILD_DIR)/time.o $(BUILD_DIR)/pause.o $(BUILD_DIR)/update.o \
 							$(BUILD_DIR)/play.o
 
 # Allow make all and make clean to be executed even if there is a file
@@ -78,8 +78,8 @@ $(BUILD_DIR)/pause.o: $(SRC_DIR)/pause.c $(SRC_DIR)/pause.h $(BUILD_DIR)
 	@echo "Compiling pause.c..."
 	$(COMPILE) $< -o $@
 
-$(BUILD_DIR)/watts.o: $(SRC_DIR)/watts.c $(SRC_DIR)/watts.h $(BUILD_DIR)
-	@echo "Compiling watts.c..."
+$(BUILD_DIR)/update.o: $(SRC_DIR)/update.c $(SRC_DIR)/update.h $(BUILD_DIR)
+	@echo "Compiling update.c..."
 	$(COMPILE) $< -o $@
 
 $(BUILD_DIR)/play.o: $(SRC_DIR)/play.c $(SRC_DIR)/play.h $(BUILD_DIR)

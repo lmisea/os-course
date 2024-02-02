@@ -32,7 +32,7 @@ void print_ascii(int relationship) {
   }
 }
 
-void print_eating_ascii() { printf("%s", PIKACHU_EATING); }
+void print_eating_ascii() { printf("Pikachu ate it.\n%s", PIKACHU_EATING); }
 
 void print_victory_ascii() { printf("%s", PIKACHU_WON); }
 
