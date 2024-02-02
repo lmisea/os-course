@@ -1,13 +1,18 @@
 /**
  * @file pikachu.h
  *
- * @brief This file contains the functions to see the status of our pikachu,
- * its relationship with us and the gifted objects..
+ * @brief This file contains the STATUS macro and the function prototypes for
+ * showing the pikachu status and its feelings.
  */
 
 #ifndef PIKACHU_H
 #define PIKACHU_H
 
+#include "linkedList.h" /* struct linked_list */
+
+/**
+ * ASCII art that appears when checking the pikachu status.
+ */
 #define STATUS                                                                 \
   "\
                $$                  $$                        \n\
@@ -19,20 +24,24 @@
   /$$$$$$$/     $$$$    $$$$$$$     $$$$    $$$$$$   $$$$$$$\n"
 
 /**
- * @brief It shows us how Pikachu is, our current relationship and the
- * list of gifts given.
+ * @brief Print the relationship status with pikachu and its feelings, along
+ * with the list of gifts that have been given to pikachu.
  *
  * @param relationship Relationship with pikachu.
- * @param balance The balance you have.
- * @param head List of purchased gifts.
- * @param objects Store items.
+ * @param given_gifts List of gifts that have been given to pikachu.
  */
-void get_pikachu(int *relationship, int *balance, struct Node *head,
-                 char *objects[]);
+void print_pikachu_status(int *relationship, struct linked_list *given_gifts);
 
 /**
- * @brief Tell how pikachu feels
- * @param relationship Relationship with pikachu.
+ * @brief Print the pikachu feelings based on the relationship.
  */
-void feelings(int relationship);
+void get_pikachu_feelings(int relationship);
+
+/**
+ * @brief Print the list of gifts that have been given to pikachu.
+ *
+ * @param given_gifts List of gifts that have been given to pikachu.
+ */
+void print_given_gifts_list(struct linked_list *given_gifts);
+
 #endif /* PIKACHU_H*/

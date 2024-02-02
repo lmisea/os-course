@@ -12,6 +12,10 @@
 #define PRICE(p) (100 + (p * 100))  /* Price of the object*/
 #define EFFECT(e) (100 + (e * 150)) /* Effect of the object*/
 #define NUM_OBJECTS 9
+
+/**
+ * @brief ASCII art that appears when the user goes to the store.
+ */
 #define STORE                                                                  \
   "\
   $$$$$$$            $$                            $$\n\
@@ -25,31 +29,39 @@
                                                                        $$\n"
 
 /**
- * @brief Shows the store and asks if you want to buy
+ * @brief Show the pokeshop and ask if the user wants to buy something.
  *
- * @param relationship Relationship with pikachu.
- * @param balance The balance you have.
- * @param head List of purchased gifts.
- * @param objects Store items.
+ * @param relationship Relationship with Pikachu.
+ * @param balance Watts balance.
+ * @param given_gifts List of gifts given to Pikachu.
+ * @param last_checked_time Last time the watts balance was updated.
  */
-void get_shop(int *relationship, int *balance, struct Node **head,
-              char *objects[], time_t *last_checked_time);
+void go_to_shop(int *relationship, int *balance,
+                struct linked_list *given_gifts, time_t *last_checked_time);
 
 /**
- * @brief Shows the table of objects, prices and relationship.
- * @param objects Store items.
+ * @brief Shows the table of items, prices and effects.
+ *
+ * @param items Array of items in the store.
  */
-void show_the_store(char *objects[]);
+void show_the_store(char *items[]);
+
+/**
+ * @brief Print an item from the store.
+ *
+ * @param item Item to print.
+ */
+void print_item(char *item);
 
 /**
  * @brief Function that is displayed if you want to buy.
  *
  * @param relationship Relationship with pikachu.
  * @param balance The balance you have.
- * @param head List of purchased gifts.
- * @param objects Store items.
+ * @param given_gifts List of gifts given to pikachu.
+ * @param items Array of items in the store.
  */
-void buy_object(int *relationship, char *objects[], int *balance,
-                struct Node **head);
+void buy_object(int *relationship, int *balance,
+                struct linked_list *given_gifts, char *items[]);
 
 #endif /* SHOP_H */

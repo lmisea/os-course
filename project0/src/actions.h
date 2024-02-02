@@ -8,52 +8,46 @@
 #ifndef ACTIONS_H
 #define ACTIONS_H
 
-#define NUM_ACTIONS 6 /* Number of actions */
+/**
+ * @brief This constant contains the number of actions that the user can do.
+ */
+#define NUM_OF_ACTIONS 6
 
 /**
  * @brief This enum contains the actions that the user can do.
  */
-enum Actions { TIME, WATTS, SHOP, PIKACHU, PLAY, BACK };
+enum actions { TIME, WATTS, SHOP, PIKACHU, PLAY, BACK };
 
 /**
  * @brief This function gets the action from the user.
  *
  * @return The action that the user wants to do.
  */
-enum Actions get_action();
+enum actions get_action();
 
 /**
  * @brief This function prints the actions that the user can do.
  *
  * @param actions The actions array.
  */
-void print_actions(char *actions[]);
+void print_actions(const char *actions[]);
 
 /**
  * @brief This function gets the index of the action that the user wants to do.
  *
  * @param action The action that the user wants to do.
  * @param actions The actions array.
- * @param cota The array legth.
  *
  * @return The index of the action that the user wants to do.
  * @return -1 if the action is not valid.
  */
-int get_index(char *action, char *actions[], int cota);
+int get_action_index(char *action, const char *actions[]);
 
 /**
- * @brief This function converts the word to lowercase and uppercase.
+ * @brief This function converts the user input to the correct format.
  *
- * @param word The word that the user wants to check.
+ * @param input The input to be converted.
  */
-void check_word(char *word);
-
-/**
- * @brief This function print a word until you get a \n
- *
- * @param index Position of the word in the arrangement.
- * @param objects Arrangement with the words to print.
- */
-void print_letter(int index, char *objects[]);
+void format_input(char *input);
 
 #endif /* ACTIONS_H */

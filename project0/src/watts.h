@@ -11,12 +11,13 @@
 
 /**
  * @brief This function updates the watts balance by as much seconds
- * as the program has been active since the last time the balance was checked.
+ * as the program has been active since the last time the watts balance was
+ * updated.
  *
- * @param last_checked_time The last time the balance was checked.
+ * @param last_update_time The last time the watts balance was updated.
  * @param balance The current watts balance.
  */
-void add_time_to_watts(time_t *last_checked_time, int *balance);
+void add_time_to_watts(time_t *last_update_time, int *balance);
 
 /**
  * @brief Increase the watts balance by the given amount.

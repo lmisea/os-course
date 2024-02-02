@@ -11,12 +11,12 @@
 #include <stdio.h> /* printf */
 #include <time.h>  /* time_t */
 
-void add_time_to_watts(time_t *last_checked_time, int *balance) {
+void add_time_to_watts(time_t *last_update_time, int *balance) {
   /* Get the time since the last time the balance was checked */
-  time_t time_active = get_time_difference(last_checked_time);
+  time_t time_active = get_time_difference(last_update_time);
 
-  /* Update the last checked time to the current time */
-  update_last_checked_time(last_checked_time);
+  /* Update the last time the watts balance was updated */
+  update_last_update_time(last_update_time);
 
   /* Add the seconds to the balance */
   increase_watts(time_active, balance);

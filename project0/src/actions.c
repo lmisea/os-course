@@ -6,20 +6,24 @@
  * that the player wants to take.
  */
 
-#include "actions.h" /* Actions enum and function prototypes */
+#include "actions.h" /* enum actions, NUM_OF_ACTIONS, functions prototypes */
 #include "ascii.h"   /* Ascii art macros */
 
 #include <ctype.h>  /* toLower */
 #include <stdio.h>  /* printf, fgets, stdin */
 #include <string.h> /* strcmp */
 
-enum Actions get_action() {
+enum actions get_action() {
   int tries = 0;   /* Number of tries */
   char action[10]; /* Action that the player wants to take */
 
-  /* Actions that the player can take */
-  char *actions[] = {"Time\n",    "Watts\n", "Shop\n",
-                     "Pikachu\n", "Play\n",  "Back\n"};
+  /*
+   + Array containing the actions that the player can take.
+   * static is used to crate only one instance of the array
+   * and not one for each function call.
+   */
+  static const char *actions[] = {"Time\n",    "Watts\n", "Shop\n",
+                                  "Pikachu\n", "Play\n",  "Back\n"};
 
   /* Loop for asking the action to the player */
   do {
@@ -27,16 +31,17 @@ enum Actions get_action() {
     printf("Available actions:\n");
     print_actions(actions);
 
-    /* Take a action */
+    /* Ask the user for the action to take */
     printf("Enter your action: ");
 
     /* Label repeat, it is used for the invalid case*/
   repeat:
     fgets(action, sizeof(action), stdin);
+    format_input(action); /* Convert user input to correct format */
 
     /* Check if the action is valid */
-    if (get_index(action, actions, NUM_ACTIONS) != -1) {
-      return get_index(action, actions, NUM_ACTIONS);
+    if (get_action_index(action, actions) != -1) {
+      return get_action_index(action, actions);
     } else {
       printf("Action Invalid\n");
       printf("Please enter a valid action: ");
@@ -51,21 +56,20 @@ enum Actions get_action() {
   } while (1);
 }
 
-void print_actions(char *actions[]) {
+void print_actions(const char *actions[]) {
   int i; /* Iterator */
 
   /* Print the actions*/
-  for (i = 0; i < NUM_ACTIONS; i++) {
+  for (i = 0; i < NUM_OF_ACTIONS; i++) {
     printf("%d) %s", i + 1, *(actions + i));
   }
 }
 
-int get_index(char *action, char *actions[], int cota) {
+int get_action_index(char *action, const char *actions[]) {
   int i; /* Iterator */
 
-  check_word(action);
   /* Search the action in the actions array */
-  for (i = 0; i < cota; i++) {
+  for (i = 0; i < NUM_OF_ACTIONS; i++) {
     if (strcmp(action, actions[i]) == 0) {
       return i;
     }
@@ -73,26 +77,15 @@ int get_index(char *action, char *actions[], int cota) {
   return -1; /* The action is not valid */
 }
 
-void check_word(char *word) {
+void format_input(char *input) {
   int i; /* Iterator */
 
   /* Eliminates inconveniences with upper and lower case */
-  for (i = 0; *(word + i) != '\n'; i++) {
+  for (i = 0; *(input + i) != '\n'; i++) {
     if (i == 0) {
-      *(word + i) = toupper(*(word + i));
+      *(input + i) = toupper(*(input + i));
     } else {
-      *(word + i) = tolower(*(word + i));
+      *(input + i) = tolower(*(input + i));
     }
-  }
-}
-
-void print_letter(int index, char *objects[]) {
-  /* Word to print */
-  char *letter = objects[index];
-
-  /* Letter by letter printing */
-  while (*letter != '\n') {
-    printf("%c", *letter);
-    letter++;
   }
 }

@@ -7,16 +7,19 @@
 #ifndef PLAY_H
 #define PLAY_H
 
-#include "linkedList.h" /* List of purchased items */
+#include "linkedList.h" /* struct linked_list */
 
 #include <time.h> /* time_t */
 
 /**
- * @brief This function is used to play the game.
+ * @brief This function is used to play with Pikachu.
  *
- * @param head The head of the list of purchased items.
+ * @param relationship Relationship with Pikachu.
+ * @param balance Watts balance.
+ * @param given_gifts List of gifts given to Pikachu.
+ * @param last_update_time Last time the watts balance was updated.
  */
-void play(int *relationship, int *balance, struct Node *head, char *objects[],
-          time_t *last_checked_time);
+void play(int *relationship, int *balance, struct linked_list *given_gifts,
+          time_t *last_update_time);
 
 #endif /* PLAY_H */

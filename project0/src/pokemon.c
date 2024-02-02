@@ -19,16 +19,13 @@
 #include <time.h>   /* time_t */
 
 int main(int argc, char const *argv[]) {
-  int relationship = 0;                  /* Start a relationship with Pikachu */
-  time_t start_time = time(NULL);        /* Start the time */
-  time_t last_checked_time = time(NULL); /* Record the last time the balance was
-                                            checked */
-  int balance = 0;                       /* Start the watts balance */
-  struct Node *head = NULL;              /* Start the gift list */
-  /* Start the objects list */
-  char *objects[] = {"Baya\n",         "Bayamarga\n",      "Pokeball\n",
-                     "Antiparabaya\n", "Baya misterio\n",  "Baya milagro\n",
-                     "Baya dorada\n",  "Baya importada\n", "Caramelo raro\n"};
+  int relationship = 0;           /* Relationship with pikachu */
+  time_t start_time = time(NULL); /* Time when the game started */
+  int balance = 0;                /* Watts balance */
+  struct linked_list given_gifts; /* List of gifts given to Pikachu */
+  initialize_list(&given_gifts);  /* Initialize the list */
+  /* Last time the watts balance was updated */
+  time_t last_update_time = time(NULL);
 
   /* Prompt the user to choose an action */
   do {
@@ -44,21 +41,20 @@ int main(int argc, char const *argv[]) {
 
     case WATTS:
       increase_watts(10, &balance);
-      add_time_to_watts(&last_checked_time, &balance);
+      add_time_to_watts(&last_update_time, &balance);
       print_watts(balance);
       wait_for_key();
       break;
 
     case SHOP:
       increase_watts(10, &balance);
-      add_time_to_watts(&last_checked_time, &balance);
-      get_shop(&relationship, &balance, &head, objects, &last_checked_time);
+      add_time_to_watts(&last_update_time, &balance);
+      go_to_shop(&relationship, &balance, &given_gifts, &last_update_time);
       break;
 
     case PIKACHU:
       increase_watts(10, &balance);
-      add_time_to_watts(&last_checked_time, &balance);
-      get_pikachu(&relationship, &balance, head, objects);
+      print_pikachu_status(&relationship, &given_gifts);
       wait_for_key();
       break;
 
@@ -74,6 +70,6 @@ int main(int argc, char const *argv[]) {
     default:
       break;
     }
-  } while (relationship != -1);
+  } while (1);
   return EXIT_SUCCESS;
 }

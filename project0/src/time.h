@@ -27,10 +27,10 @@ void print_time(time_t *start_time);
 time_t get_time_difference(time_t *time_to_compare);
 
 /**
- * @brief Update the last checked time to the current time
+ * @brief Update the last update time to the current time
  *
- * @param last_checked_time The last time the balance was checked.
+ * @param last_update_time The last time the balance was updated.
  */
-void update_last_checked_time(time_t *last_checked_time);
+void update_last_update_time(time_t *last_update_time);
 
 #endif /* TIME_FILE_H */

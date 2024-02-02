@@ -28,6 +28,6 @@ time_t get_time_difference(time_t *time_to_compare) {
   return difftime(current_time, *time_to_compare);
 }
 
-void update_last_checked_time(time_t *last_checked_time) {
-  *last_checked_time = time(NULL);
+void update_last_update_time(time_t *last_update_time) {
+  *last_update_time = time(NULL);
 }
