@@ -26,11 +26,11 @@ struct linked_list {
 };
 
 /**
- * @brief Initialize the list
+ * @brief Create a linked list
  *
- * @param list Linked list to be initialized.
+ * @return struct linked_list* Pointer to the created linked list.
  */
-void initialize_list(struct linked_list *list);
+struct linked_list *create_linked_list(void);
 
 /**
  * @brief Insert a node to the list

@@ -54,3 +54,7 @@ void print_given_gifts_list(struct linked_list *given_gifts) {
     print_list(given_gifts);
   }
 }
+
+void print_watts(int balance) {
+  printf("\nCurrent Watts balance: %d\n\n", balance);
+}

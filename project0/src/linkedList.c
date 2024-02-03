@@ -9,11 +9,17 @@
 #include <stdio.h>  /* printf */
 #include <stdlib.h> /* NULL */
 
-void initialize_list(struct linked_list *list) {
+struct linked_list *create_linked_list() {
+  /* Create a space in memory to store the list */
+  struct linked_list *list =
+      (struct linked_list *)malloc(sizeof(struct linked_list));
+
   /* Initialize the list */
   list->head = NULL;
   list->tail = NULL;
   list->size = 0;
+
+  return list;
 }
 
 void insert_node(struct linked_list *list, char *object) {

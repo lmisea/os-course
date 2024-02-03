@@ -38,17 +38,18 @@ repeat:
                      relationship);        /* Update the game status */
   show_the_store(items);                   /* Show the items*/
   printf("Watts balance: %d\n", *balance); /* Show the balance*/
+
+  /* Loop to ask if the user wants to buy */
   do {
     printf("Do you want to buy a gift? [y/N]: ");
 
-  repeat_question:
     fgets(user_choice, sizeof(user_choice),
           stdin); /* Ask if the user wants to buy */
 
     format_input(user_choice); /* Convert user input to correct format */
 
     if (strcmp(user_choice, "Y\n") == 0) {
-      /* Case where you accept */
+      /* The user wants to buy */
       buy_object(relationship, balance, given_gifts, items, last_update_time);
       goto repeat; /* Show the store again */
     } else if (strcmp(user_choice, "N\n") == 0 ||
@@ -57,10 +58,8 @@ repeat:
       printf("\n");
       break;
     } else {
-      /* Invalid word */
-      printf("Invalid answer\n");
-      printf("Try again: ");
-      goto repeat_question; /* Give it one more try */
+      /* Invalid answer */
+      printf("Invalid answer. Answer with [y/N].\n");
     }
   } while (1);
 }
@@ -98,20 +97,20 @@ void buy_object(int *relationship, int *balance,
   /* Iterators */
   int i;
   int j = 0;
-  /* Object you want to buy */
-  char name_object[16];
+
+  char item_name[16]; /* Item the user wants to buy */
 
   do {
     i = 0;
 
     /* Ask the item to buy */
-    printf("Enter the name of the object: ");
-    fgets(name_object, sizeof(name_object), stdin);
+    printf("Enter the name of the item: ");
+    fgets(item_name, sizeof(item_name), stdin);
 
-    format_input(name_object); /* Convert user input to correct format */
+    format_input(item_name); /* Convert user input to correct format */
 
     /* Check if you want to return to the previous screen */
-    if (strcmp(name_object, "Back\n") == 0) {
+    if (strcmp(item_name, "Back\n") == 0) {
       break;
     }
 
@@ -120,7 +119,7 @@ void buy_object(int *relationship, int *balance,
 
     /* Check if the object is in the items array */
     while (i < NUM_OBJECTS) {
-      if (strcmp(name_object, items[i]) == 0) {
+      if (strcmp(item_name, items[i]) == 0) {
         break;
       }
       i++;
@@ -148,14 +147,14 @@ void buy_object(int *relationship, int *balance,
         increase_relationship(EFFECT(i), relationship);
         /* Add the item to the given gifts list */
         insert_node(given_gifts, items[i]);
-        /* Remove the \n from the name of the object */
-        name_object[strlen(name_object) - 1] = '\0';
-        printf("\nSuccessfully purchased %s.\n", name_object);
+        /* Remove the \n from the name of the item */
+        item_name[strlen(item_name) - 1] = '\0';
+        printf("\nSuccessfully purchased %s.\n", item_name);
         /* Print pikachu eating if the object is not a pokeball */
         if (i != 2) {
           print_eating_ascii();
         }
-        /* Print the effect of the object */
+        /* Print the effect of the item */
         printf("Effect: relationship +%d\n\n", EFFECT(i));
         wait_for_key(); /* Wait for the user to press a key */
         printf("\n");

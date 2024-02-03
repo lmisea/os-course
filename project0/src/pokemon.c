@@ -10,23 +10,28 @@
 #include "linkedList.h" /* List of purchased items*/
 #include "pause.h"      /* Function to pause the execution of the program */
 #include "pikachu.h"    /* Teach the relationship and list of pikachu */
+#include "play.h"       /* Function to play with pikachu */
 #include "shop.h"       /* Shop database and function */
 #include "time.h"       /* Function to display the active time of the game */
 #include "update.h"     /* Function to update the watts balance and the
                            relationship */
 
 #include <stdio.h>  /* printf */
-#include <stdlib.h> /* EXIT_SUCCESS */
+#include <stdlib.h> /* EXIT_SUCCESS, srand, rand */
 #include <time.h>   /* time_t, time */
 
 int main(int argc, char const *argv[]) {
   int relationship = 0;           /* Relationship with pikachu */
   time_t start_time = time(NULL); /* Time when the game started */
   int balance = 0;                /* Watts balance */
-  struct linked_list given_gifts; /* List of gifts given to Pikachu */
-  initialize_list(&given_gifts);  /* Initialize the list */
+  /* List of gifts given to Pikachu */
+  struct linked_list *given_gifts = create_linked_list();
   /* Last time the watts balance and the relationship were updated */
   time_t last_update_time = time(NULL);
+
+  srand(start_time);                 /* Seed for the random number generator */
+  int pikachu_choice;                /* Pikachu's choice */
+  int *choice_ptr = &pikachu_choice; /* Pointer to pikachu_choice */
 
   /* Prompt the user to choose an action */
   do {
@@ -50,19 +55,26 @@ int main(int argc, char const *argv[]) {
     case SHOP:
       increase_watts(10, &balance);
       update_game_status(&last_update_time, &balance, &relationship);
-      go_to_shop(&relationship, &balance, &given_gifts, &last_update_time);
+      go_to_shop(&relationship, &balance, given_gifts, &last_update_time);
       break;
 
     case PIKACHU:
       increase_watts(10, &balance);
       update_game_status(&last_update_time, &balance, &relationship);
-      print_pikachu_status(&relationship, &given_gifts);
+      print_pikachu_status(&relationship, given_gifts);
       wait_for_key();
       break;
 
     case PLAY:
-      printf("Se ha detectado la accion Play\n");
-      wait_for_key();
+      /* Check if Pikachu has received at least two gifts */
+      if (get_list_size(given_gifts) < 2) {
+        printf("\nPikachu is not in the mood to play. Give him at least two "
+               "gifts.\n");
+        wait_for_key();
+        break;
+      }
+      *choice_ptr = rand() % get_list_size(given_gifts);
+      play(&relationship, &balance, given_gifts, &last_update_time, choice_ptr);
       break;
 
     case BACK:

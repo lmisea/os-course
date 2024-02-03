@@ -34,6 +34,8 @@ void print_pikachu_status(int *relationship, struct linked_list *given_gifts);
 
 /**
  * @brief Print the pikachu feelings based on the relationship.
+ *
+ * @param relationship Relationship with pikachu.
  */
 void get_pikachu_feelings(int relationship);
 
@@ -43,5 +45,12 @@ void get_pikachu_feelings(int relationship);
  * @param given_gifts List of gifts that have been given to pikachu.
  */
 void print_given_gifts_list(struct linked_list *given_gifts);
+
+/**
+ * @brief Print the current watts balance.
+ *
+ * @param balance Current watts balance.
+ */
+void print_watts(int balance);
 
 #endif /* PIKACHU_H*/

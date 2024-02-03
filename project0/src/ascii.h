@@ -184,20 +184,20 @@ void print_ascii(int relationship);
  *
  * This function is called when the user gives a comestible to Pikachu.
  */
-void print_eating_ascii();
+void print_eating_ascii(void);
 
 /**
  * @brief Prints the ascii art of Pikachu celebrating.
  *
  * This function is called when Pikachu wins the game.
  */
-void print_victory_ascii();
+void print_victory_ascii(void);
 
 /**
  * @brief Prints the ascii art of Pikachu sad.
  *
  * This function is called when Pikachu loses the game.
  */
-void print_defeat_ascii();
+void print_defeat_ascii(void);
 
 #endif /* ASCII_H */

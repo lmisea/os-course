@@ -31,10 +31,6 @@ void increase_watts(int increment, int *balance) { *balance += increment; }
 
 void decrease_watts(int decrement, int *balance) { *balance -= decrement; }
 
-void print_watts(int balance) {
-  printf("\nCurrent Watts balance: %d\n\n", balance);
-}
-
 void increase_relationship(int increment, int *relationship) {
   *relationship += increment;
 }
