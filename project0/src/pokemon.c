@@ -23,7 +23,7 @@
 int main(int argc, char const *argv[]) {
   int relationship = 0;           /* Relationship with pikachu */
   time_t start_time = time(NULL); /* Time when the game started */
-  int balance = 1000;             /* Watts balance */
+  int balance = 0;                /* Watts balance */
   /* List of gifts given to Pikachu */
   struct linked_list *given_gifts = create_linked_list();
   /* Last time the watts balance and the relationship were updated */
