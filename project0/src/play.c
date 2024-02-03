@@ -46,6 +46,7 @@ void play(int *relationship, int *balance, struct linked_list *given_gifts,
     } else {
       /* Case where the input is not valid */
       printf("Invalid answer. Answer with [y/N].\n");
+      clear_input_buffer(); /* Clear the input buffer */
     }
   } while (1);
 }

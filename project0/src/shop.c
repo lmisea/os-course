@@ -22,11 +22,13 @@ void go_to_shop(int *relationship, int *balance,
    + Array of items in the store.
    * static is used to crate only one instance of the array
    * and not one for each function call.
+   *
+   * The english names were taken from: https://www.wikidex.net/wiki/WikiDex.
    */
   static char *items[] = {
-      "Baya\n",         "Bayamarga\n",      "Pokeball\n",
-      "Antiparabaya\n", "Baya misterio\n",  "Baya milagro\n",
-      "Baya dorada\n",  "Baya importada\n", "Caramelo raro\n"};
+      "Berry\n",          "Bitter berry\n",   "Pokeball\n",
+      "Prz cure berry\n", "Mystery berry\n",  "Miracle berry\n",
+      "Gold berry\n",     "Imported berry\n", "Rare candy\n"};
 
   char user_choice[6]; /* User choice */
 
@@ -60,6 +62,7 @@ repeat:
     } else {
       /* Invalid answer */
       printf("Invalid answer. Answer with [y/N].\n");
+      clear_input_buffer(); /* Clear the input buffer */
     }
   } while (1);
 }

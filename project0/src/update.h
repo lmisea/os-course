@@ -42,6 +42,8 @@ void decrease_watts(int decrement, int *balance);
 
 /**
  * @brief Increase the relationship with pikachu by the given amount.
+ * If the relationship plus the increment is greater than 10000, the
+ * relationship will be set to 10000.
  *
  * @param increment Amount to increase the relationship by.
  * @param relationship Pointer to the relationship with pikachu.

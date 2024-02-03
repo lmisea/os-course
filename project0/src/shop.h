@@ -2,6 +2,9 @@
  * @file shop.h
  *
  * @brief This file contains the functions to see the store and buy objects.
+ *
+ * The store ASCII banner art was created with:
+ * https://www.asciiart.eu/text-to-ascii-art.
  */
 
 #ifndef SHOP_H

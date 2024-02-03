@@ -32,7 +32,12 @@ void increase_watts(int increment, int *balance) { *balance += increment; }
 void decrease_watts(int decrement, int *balance) { *balance -= decrement; }
 
 void increase_relationship(int increment, int *relationship) {
-  *relationship += increment;
+  /* Check if the relationship plus the increment is greater than 10000 */
+  if (*relationship + increment > 10000) {
+    *relationship = 10000;
+  } else {
+    *relationship += increment;
+  }
 }
 
 void decrease_relationship(int decrement, int *relationship) {

@@ -8,6 +8,8 @@
 #include "ascii.h" /* Ascii art macros */
 #include <stdio.h> /* printf */
 
+void print_pikachu_banner() { printf("%s", PIKACHU_BANNER); }
+
 void print_ascii(int relationship) {
   switch (relationship) {
   case 0 ... 2500:

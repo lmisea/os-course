@@ -23,7 +23,7 @@
 int main(int argc, char const *argv[]) {
   int relationship = 0;           /* Relationship with pikachu */
   time_t start_time = time(NULL); /* Time when the game started */
-  int balance = 0;                /* Watts balance */
+  int balance = 1000;             /* Watts balance */
   /* List of gifts given to Pikachu */
   struct linked_list *given_gifts = create_linked_list();
   /* Last time the watts balance and the relationship were updated */
@@ -32,6 +32,21 @@ int main(int argc, char const *argv[]) {
   srand(start_time);                 /* Seed for the random number generator */
   int pikachu_choice;                /* Pikachu's choice */
   int *choice_ptr = &pikachu_choice; /* Pointer to pikachu_choice */
+
+  /* Greet the user and explain quickly the game */
+  print_pikachu_banner();
+  printf(
+      "\nWelcome to the Pikachu game!\n\n"
+      "In this game you will have to take care of Pikachu and make him happy.\n"
+      "You can do this by giving him gifts and playing with him.\n\n"
+      "Buy gifts at the store with the watts you earn every second.\n"
+      "(There is a rumor that says that consulting the available options "
+      "from time to time is a good idea for your watts balance).\n\n"
+      "Be careful! If you don't take care of Pikachu, he will get angry and "
+      "the relationship will decrease.\n\n");
+
+  wait_for_key();
+  printf("Let's start!\n");
 
   /* Prompt the user to choose an action */
   do {

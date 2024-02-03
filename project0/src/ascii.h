@@ -6,6 +6,9 @@
  *
  * All Pikachu ASCII art was taken from
  * https://emojicombos.com/pikachu-text-art.
+ *
+ * The Pikachu ASCII banner was created with:
+ * https://www.asciiart.eu/text-to-ascii-art.
  */
 
 #ifndef ASCII_H
@@ -169,7 +172,22 @@
 ⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿\n\
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿\n"
 
+#define PIKACHU_BANNER                                                         \
+  "\
+########  #### ##    ##    ###     ######  ##     ## ##     ##\n\
+##     ##  ##  ##   ##    ## ##   ##    ## ##     ## ##     ##\n\
+##     ##  ##  ##  ##    ##   ##  ##       ##     ## ##     ##\n\
+########   ##  #####    ##     ## ##       ######### ##     ##\n\
+##         ##  ##  ##   ######### ##       ##     ## ##     ##\n\
+##         ##  ##   ##  ##     ## ##    ## ##     ## ##     ##\n\
+##        #### ##    ## ##     ##  ######  ##     ##  #######\n"
+
 /* Function prototypes */
+
+/**
+ * @brief Prints the Pikachu banner.
+ */
+void print_pikachu_banner(void);
 
 /**
  * @brief Returns the ascii art that corresponds to the relationship

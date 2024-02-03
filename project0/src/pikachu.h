@@ -3,6 +3,9 @@
  *
  * @brief This file contains the STATUS macro and the function prototypes for
  * showing the pikachu status and its feelings.
+ *
+ * The status ASCII banner art was created with:
+ * https://www.asciiart.eu/text-to-ascii-art.
  */
 
 #ifndef PIKACHU_H
