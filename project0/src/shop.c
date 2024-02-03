@@ -152,7 +152,7 @@ void buy_object(int *relationship, int *balance,
         printf("\nSuccessfully purchased %s.\n", item_name);
         /* Print pikachu eating if the object is not a pokeball */
         if (i != 2) {
-          print_eating_ascii();
+          print_eating_ascii(); /* This is an extra credit feature */
         }
         /* Print the effect of the item */
         printf("Effect: relationship +%d\n\n", EFFECT(i));
