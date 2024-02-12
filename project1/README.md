@@ -42,6 +42,8 @@ After compiling the code, you can run the executable `bin/wizard_chess.out` by r
 ./bin/wizard_chess.out
 ```
 
+It is highly recommended to run the game in a terminal sized to 51 characters wide by 34 characters high (51x34), as the chess board is designed to fit this dimension.
+
 ### Cleaning
 
 To clean all the generated files, run the following command:
