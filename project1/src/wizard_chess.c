@@ -5,10 +5,19 @@
  */
 
 #include "chessboard.h" /* print_chessboard */
+#include "piece.h"      /* create_default_pieces */
 
+#include <stdio.h>  /* printf */
 #include <stdlib.h> /* EXIT_SUCCESS */
 
 int main(int argc, char const *argv[]) {
-  print_chessboard();
+  struct piece user_pieces[8];
+  struct piece computer_pieces[8];
+  create_default_pieces(user_pieces, computer_pieces);
+
+  char chessboard[NUM_OF_ROWS][NUM_OF_COLUMNS];
+  init_chessboard(chessboard);
+  print_chessboard(chessboard);
+
   return EXIT_SUCCESS;
 }

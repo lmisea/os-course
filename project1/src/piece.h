@@ -8,14 +8,14 @@
 #define PIECE_H
 
 #define BLACK_KING "♚"
-#define BLACK_NIGHT "♞"
+#define BLACK_KNIGHT "♞"
 #define WHITE_KING "♔"
-#define WHITE_NIGHT "♘"
+#define WHITE_KNIGHT "♘"
 
 /**
  * @brief enum to represent the type of the piece
  */
-enum piece_type { KING, NIGHT };
+enum piece_type { KING, KNIGHT };
 
 /**
  * @brief enum to represent the color of the piece
@@ -45,5 +45,21 @@ struct piece {
  */
 struct piece create_piece(enum piece_type type, int x, int y,
                           enum piece_color color);
+
+/**
+ * @brief Function to create the default pieces
+ *
+ * @param user_pieces Array of pieces for the user
+ * @param computer_pieces Array of pieces for the computer
+ */
+void create_default_pieces(struct piece *user_pieces,
+                           struct piece *computer_pieces);
+
+/**
+ * @brief Function to print a piece
+ *
+ * @param p Piece to be printed
+ */
+void print_piece(struct piece p);
 
 #endif /* PIECE_H */
