@@ -6,19 +6,22 @@
 
 #include "chessboard.h" /* NUM_OF_ROWS, NUM_OF_COLUMNS, TOP_LINE, MIDDLE_LINE,
                            BOTTOM_LINE, FILE_LETTERS, RANK_NUMBERS */
+#include "piece.h"      /* struct piece */
 
 #include <stdio.h>  /* printf */
 #include <stdlib.h> /* malloc */
 
-char **create_chessboard() {
+char **create_chessboard(struct piece *user_pieces,
+                         struct piece *computer_pieces) {
   /* Pointer to the chessboard */
   char **chessboard = (char **)malloc(NUM_OF_ROWS * sizeof(char *));
   for (int i = 0; i < NUM_OF_ROWS; i++) {
     chessboard[i] = (char *)malloc(NUM_OF_COLUMNS * sizeof(char));
   }
 
-  /* Initialize the chessboard */
+  /* Initialize the chessboard and add the default pieces */
   init_chessboard(chessboard);
+  add_default_pieces_to_chessboard(chessboard, user_pieces, computer_pieces);
   return chessboard;
 }
 
@@ -56,6 +59,19 @@ void init_chessboard(char **chessboard) {
       }
     }
   }
+}
+
+void add_default_pieces_to_chessboard(char **chessboard,
+                                      struct piece *user_pieces,
+                                      struct piece *computer_pieces) {
+  for (int i = 0; i < 8; i++) {
+    add_piece_to_chessboard(chessboard, user_pieces[i]);
+    add_piece_to_chessboard(chessboard, computer_pieces[i]);
+  }
+}
+
+void add_piece_to_chessboard(char **chessboard, struct piece p) {
+  chessboard[p.y][p.x] = p.symbol;
 }
 
 void print_chessboard(char **chessboard) {

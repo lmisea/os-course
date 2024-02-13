@@ -6,11 +6,38 @@
 
 #include "piece.h" /* struct piece */
 
-#include <stdio.h> /* printf */
+#include <stdio.h>  /* printf */
+#include <stdlib.h> /* malloc */
+
+struct piece *create_user_pieces() {
+  struct piece *user_pieces = (struct piece *)malloc(8 * sizeof(struct piece));
+  for (int i = 0; i < 8; i++) {
+    if (i == 4) {
+      user_pieces[i] = create_piece(KING, ((i + 1) * 6) + 2 * i, 30, WHITE);
+      continue;
+    }
+    user_pieces[i] = create_piece(KNIGHT, ((i + 1) * 6) + 2 * i, 30, WHITE);
+  }
+  return user_pieces;
+}
+
+struct piece *create_computer_pieces() {
+  struct piece *computer_pieces =
+      (struct piece *)malloc(8 * sizeof(struct piece));
+  for (int i = 0; i < 8; i++) {
+    if (i == 4) {
+      computer_pieces[i] = create_piece(KING, ((i + 1) * 6) + 2 * i, 2, BLACK);
+      continue;
+    }
+    computer_pieces[i] = create_piece(KNIGHT, ((i + 1) * 6) + 2 * i, 2, BLACK);
+  }
+  return computer_pieces;
+}
 
 struct piece create_piece(enum piece_type type, int x, int y,
                           enum piece_color color) {
   struct piece p;
+  p.status = INBOARD;
   p.type = type;
   p.x = x;
   p.y = y;
@@ -26,17 +53,4 @@ struct piece create_piece(enum piece_type type, int x, int y,
   return p;
 }
 
-void print_piece(struct piece p) { printf("%s", p.symbol); }
-
-void create_default_pieces(struct piece *user_pieces,
-                           struct piece *computer_pieces) {
-  for (int i = 0; i < 8; i++) {
-    if (i == 5) {
-      user_pieces[i] = create_piece(KING, (i + 1) * 6, 4, WHITE);
-      computer_pieces[i] = create_piece(KING, (i + 1) * 6, 32, BLACK);
-      continue;
-    }
-    user_pieces[i] = create_piece(KNIGHT, (i + 1) * 6, 4, WHITE);
-    computer_pieces[i] = create_piece(KNIGHT, (i + 1) * 6, 32, BLACK);
-  }
-}
+void print_piece(struct piece p) { printf("%c", p.symbol); }

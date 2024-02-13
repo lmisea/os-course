@@ -7,6 +7,8 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
+#include "piece.h" /* struct piece */
+
 /**
  * @brief The top line of the chessboard.
  */
@@ -51,9 +53,13 @@
 /**
  * @brief Allocate memory for the chessboard and initialize it.
  *
- * @return The pointer to the newly created chessboard.
+ * @param user_pieces The array of pieces for the user.
+ * @param computer_pieces The array of pieces for the computer.
+ *
+ * @return The pointer to the chessboard 2D array newly created.
  */
-char **create_chessboard();
+char **create_chessboard(struct piece *user_pieces,
+                         struct piece *computer_pieces);
 
 /**
  * @brief Initialize the chessboard by adding the chessboard lines and the
@@ -62,6 +68,25 @@ char **create_chessboard();
  * @param chessboard The chessboard 2D array to be initialized.
  */
 void init_chessboard(char **chessboard);
+
+/**
+ * @brief Add the pieces to the chessboard.
+ *
+ * @param chessboard The chessboard 2D array to add the pieces to.
+ * @param user_pieces The array of pieces for the user.
+ * @param computer_pieces The array of pieces for the computer.
+ */
+void add_default_pieces_to_chessboard(char **chessboard,
+                                      struct piece *user_pieces,
+                                      struct piece *computer_pieces);
+
+/**
+ * @brief Add a piece to the chessboard.
+ *
+ * @param chessboard The chessboard 2D array to add the piece to.
+ * @param p The piece to be added to the chessboard.
+ */
+void add_piece_to_chessboard(char **chessboard, struct piece p);
 
 /**
  * @brief Print the chessboard.
