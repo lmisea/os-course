@@ -4,7 +4,7 @@
 CC          = gcc
 
 # Compiler command for object files
-COMPILE     = $(CC) -c
+COMPILE     = $(CC) -c -Wall -pthread
 
 # Linker command for creating executables
 LINK        = $(CC) -o
@@ -23,7 +23,7 @@ PROGRAM     = $(BIN_DIR)/wizard_chess.out
 
 # Specify the name of all the object files that will be created.
 BUILD_FILES = $(BUILD_DIR)/wizard_chess.o $(BUILD_DIR)/chessboard.o \
-							$(BUILD_DIR)/piece.o
+							$(BUILD_DIR)/piece.o $(BUILD_DIR)/movements.o
 
 # Allow make all and make clean to be executed even if there is a file
 # named 'all' or 'clean'.
@@ -50,6 +50,10 @@ $(BIN_DIR)/wizard_chess.out: $(BIN_DIR) $(BUILD_FILES)
 
 $(BUILD_DIR)/chessboard.o: $(SRC_DIR)/chessboard.c $(SRC_DIR)/chessboard.h $(BUILD_DIR)
 	@echo "Compiling chessboard.c..."
+	$(COMPILE) $< -o $@
+
+$(BUILD_DIR)/movements.o: $(SRC_DIR)/movements.c $(SRC_DIR)/movements.h $(BUILD_DIR)
+	@echo "Compiling movements.c..."
 	$(COMPILE) $< -o $@
 
 $(BUILD_DIR)/piece.o: $(SRC_DIR)/piece.c $(SRC_DIR)/piece.h $(BUILD_DIR)

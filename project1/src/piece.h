@@ -7,6 +7,8 @@
 #ifndef PIECE_H
 #define PIECE_H
 
+#include <pthread.h>
+
 #define BLACK_KING 'x'
 #define BLACK_KNIGHT 'z'
 #define WHITE_KING 'K'
@@ -39,6 +41,16 @@ struct piece {
   enum piece_color color;   /* Color of the piece */
 };
 
+struct routine_Piece
+{
+  char ** chessboard;
+  struct piece *pieces; 
+  int pipe_1[2];
+  int pipe_2[2];
+  int id;
+  pthread_t hilo;
+};
+
 /**
  * @brief Function to create the pieces for the user
  *
@@ -65,6 +77,9 @@ struct piece *create_computer_pieces();
  */
 struct piece create_piece(enum piece_type type, int x, int y,
                           enum piece_color color);
+
+
+struct routine_Piece *create_routine_pieces(struct piece *piece, char ** chessboard /*, int *pipe1, int *pipe2*/);
 
 /**
  * @brief Function to print a piece

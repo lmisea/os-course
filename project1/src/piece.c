@@ -34,6 +34,19 @@ struct piece *create_computer_pieces() {
   return computer_pieces;
 }
 
+struct routine_Piece *create_routine_pieces(struct piece *piece, char ** chessboard /*int *pipe1, int *pipe2*/) {
+  struct routine_Piece *routine_pieces =
+      (struct routine_Piece *)malloc(8 * sizeof(struct routine_Piece));
+  for (int i = 0; i < 8; i++) {
+    routine_pieces[i].chessboard = chessboard;
+    routine_pieces[i].pieces = piece;
+    //routine_pieces[i].pipe_1 = pipe1;
+    //routine_pieces[i].pipe_2 = pipe2;
+    routine_pieces[i].id = i;
+  }
+  return routine_pieces;
+}
+
 struct piece create_piece(enum piece_type type, int x, int y,
                           enum piece_color color) {
   struct piece p;

@@ -77,7 +77,8 @@ void add_piece_to_chessboard(char **chessboard, struct piece p) {
 void print_chessboard(char **chessboard) {
   for (int i = 0; i < NUM_OF_ROWS; i++) {
     for (int j = 0; j < NUM_OF_COLUMNS; j++) {
-      printf("%c", chessboard[i][j]);
+      //printf("linea %d columna %d:%c. y valor en %d\n",i,j ,chessboard[i][j], (int)chessboard[i][j]);
+      printf("%c",chessboard[i][j]);
     }
   }
 }

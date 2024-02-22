@@ -50,6 +50,8 @@
  */
 #define NUM_OF_COLUMNS 68
 
+#define NUM_HILOS 8
+
 /**
  * @brief Allocate memory for the chessboard and initialize it.
  *

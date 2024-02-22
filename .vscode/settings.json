@@ -8,5 +8,10 @@
     "pokemon",
     "pokeshop",
     "READCHAR"
-  ]
+  ],
+  "files.associations": {
+    "stdlib.h": "c",
+    "signal.h": "c",
+    "pthread.h": "c"
+  }
 }
