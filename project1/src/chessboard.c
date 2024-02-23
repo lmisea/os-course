@@ -25,6 +25,13 @@ char **create_chessboard(struct piece *user_pieces,
   return chessboard;
 }
 
+char **rewrite_chessboard(char ** chessboard, struct piece *user_pieces,
+                         struct piece *computer_pieces) {
+  /* Initialize the chessboard and add the default pieces */
+  init_chessboard(chessboard);
+  add_default_pieces_to_chessboard(chessboard, user_pieces, computer_pieces);
+  return chessboard;
+}
 void init_chessboard(char **chessboard) {
   int rank_index = 0;
   for (int i = 0; i < NUM_OF_ROWS; i++) {

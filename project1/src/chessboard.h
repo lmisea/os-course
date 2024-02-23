@@ -63,6 +63,9 @@
 char **create_chessboard(struct piece *user_pieces,
                          struct piece *computer_pieces);
 
+char **rewrite_chessboard(char **chessboard, struct piece *user_pieces,
+                         struct piece *computer_pieces);
+
 /**
  * @brief Initialize the chessboard by adding the chessboard lines and the
  * file letters and rank numbers.

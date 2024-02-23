@@ -38,6 +38,8 @@ struct piece {
   char symbol;              /* Symbol of the piece */
   int x;                    /* X coordinate of the piece */
   int y;                    /* Y coordinate of the piece */
+  int casillaX;
+  int casillaY;
   enum piece_color color;   /* Color of the piece */
 };
 
@@ -48,6 +50,7 @@ struct routine_Piece
   int pipe_1[2];
   int pipe_2[2];
   int id;
+  int paciencia;
   pthread_t hilo;
 };
 
@@ -75,7 +78,7 @@ struct piece *create_computer_pieces();
  *
  * @return A piece with the given type, coordinates and color
  */
-struct piece create_piece(enum piece_type type, int x, int y,
+struct piece create_piece(enum piece_type type, int x, int y, int casillaX, int casillaY,
                           enum piece_color color);
 
 

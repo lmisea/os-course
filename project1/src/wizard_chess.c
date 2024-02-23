@@ -21,14 +21,18 @@ int main(int argc, char const *argv[]) {
   struct piece *user_pieces = create_user_pieces();
   struct piece *computer_pieces = create_computer_pieces(); 
   char **chessboard = create_chessboard(user_pieces, computer_pieces);
-  
+  int cota = 0; 
   int fd_1[2]; // Descriptores de archivo para la tubería
   int fd_2[2]; // Descriptores de archivo para la tubería
   int fd_3[2]; // Descriptores de archivo para la tubería
   int fd_4[2]; // Descriptores de archivo para la tubería
 
-  struct routine_Piece *hilos_Jugador = create_routine_pieces(user_pieces, chessboard/*fd_1, fd_2*/);
-  //struct routine_Piece *hilos_Enemy = create_routine_pieces(computer_pieces, chessboard, fd_3, fd_4);
+  signal(SIGUSR1, eliminandoPiezaEnemiga);
+  signal(SIGUSR2, eliminandoPiezaJugadora);
+  signal(SIGTERM, ganaron);
+  
+  struct routine_Piece *hilos_Jugador;
+  struct routine_Piece *hilos_Enemy;
   // Crear el pipe
   if (pipe(fd_1) == -1) {
     perror("Error al crear el pipe");
@@ -47,69 +51,114 @@ int main(int argc, char const *argv[]) {
     exit(EXIT_FAILURE);
   }
 
-  for (int i = 0; i < 8; ++i) {
-    pipe(hilos_Jugador[i].pipe_1);
-  }
-  pid_t chessPlayer = fork();
 
-  if (chessPlayer != 0) {
-    // Father
-  
-    waitpid(chessPlayer, NULL, 0);
-    close(fd_1[1]);
-
-    for (int i = 0; i < 8; i++) {
-      close(hilos_Jugador[i].pipe_1[1]);
-      read(hilos_Jugador[i].pipe_1[0], &user_pieces[i].x, sizeof(user_pieces[i].x));
-      read(hilos_Jugador[i].pipe_1[0], &user_pieces[i].y, sizeof(user_pieces[i].y));
-      close(hilos_Jugador[i].pipe_1[0]);
-    }
-
-    // Cerrar extremos de escritura de las tuberías en el proceso padre
-  
-    /*for (int i = 0; i < NUM_HILOS; i++) {
-      printf("Posicion x: %d y posicion y: %d\n", user_pieces[i].x, user_pieces[i].y);
-    }*/
+  while(cota < 100) {
+    cota++;
+    hilos_Jugador = create_routine_pieces(user_pieces, chessboard);
     for (int i = 0; i < 8; ++i) {
-    printf("Este es mi valor de hilos jugador %d\n", hilos_Jugador[i].id);
-    printf("Posicion x:%d\n", hilos_Jugador[i].pieces[i].x);
+      pipe(hilos_Jugador[i].pipe_1);
     }
-
-    
-    // Cerrar el extremo de escritura del pipe en el proceso padre
-    for (int i = 0; i < NUM_OF_ROWS; i++) {
-      read(fd_1[0], chessboard[i], NUM_OF_COLUMNS * sizeof(char));
-    }
-    close(fd_1[0]); 
-    print_chessboard(chessboard);
-  
-
-  } else {
-    // Child
-     // Cerrar extremos de escritura de las tuberías en el proceso hijo
-    close(fd_1[0]);
     for (int i = 0; i < 8; ++i) {
-      //close(hilos_Jugador[i].pipe_1[1]);
-      if (i == 4) {
-        continue;
+      pipe(hilos_Jugador[i].pipe_2);
+    }
+    pid_t chessPlayer = fork();
+
+    if (chessPlayer != 0) {
+      // Father
+      waitpid(chessPlayer, NULL, 0);
+
+      for (int i = 0; i < 8; i++) {
+        close(hilos_Jugador[i].pipe_1[1]);
+        read(hilos_Jugador[i].pipe_1[0], &user_pieces[i].x, sizeof(user_pieces[i].x));
+        read(hilos_Jugador[i].pipe_1[0], &user_pieces[i].y, sizeof(user_pieces[i].y));
+        close(hilos_Jugador[i].pipe_1[0]);
       }
-      pthread_create(&hilos_Jugador[i].hilo, NULL, &horse_move, &hilos_Jugador[i]);
-      sleep(1);
-    }
 
-    for (int i = 0; i < 8; ++i) {
-      pthread_join(hilos_Jugador[i].hilo, NULL);
-    }
+      for (int i = 0; i < 8; i++) {
+        close(hilos_Jugador[i].pipe_2[1]);
+        read(hilos_Jugador[i].pipe_2[0], &user_pieces[i].casillaX, sizeof(user_pieces[i].casillaX));
+        read(hilos_Jugador[i].pipe_2[0], &user_pieces[i].casillaY, sizeof(user_pieces[i].casillaY));
+        close(hilos_Jugador[i].pipe_2[0]);
+      }
+      chessboard = rewrite_chessboard(chessboard,user_pieces, computer_pieces);
+      print_chessboard(chessboard);
+      printf("Player turn is end\n");
 
-    printf("TERMINE PROCESO HIJO\n");
+      hilos_Enemy = create_routine_pieces(computer_pieces, chessboard);
+      for (int i = 0; i < 8; ++i) {
+        pipe(hilos_Enemy[i].pipe_1);
+      }
+      for (int i = 0; i < 8; ++i) {
+        pipe(hilos_Enemy[i].pipe_2);
+      } 
+      pid_t chessEnemy = fork();
+      
+      if (chessEnemy != 0) {
+        // Father
+        waitpid(chessEnemy, NULL, 0);
+        
+        printf("INICIO SEGUNDO PROCESO\n");
+        for (int i = 0; i < 8; i++) {
+          close(hilos_Enemy[i].pipe_1[1]);
+          read(hilos_Enemy[i].pipe_1[0], &computer_pieces[i].x, sizeof(computer_pieces[i].x));
+          read(hilos_Enemy[i].pipe_1[0], &computer_pieces[i].y, sizeof(computer_pieces[i].y));
+          close(hilos_Enemy[i].pipe_1[0]);
+        }
 
-    
-    for (int i = 0; i < NUM_OF_ROWS; i++) {
-      write(fd_1[1], hilos_Jugador[0].chessboard[i], NUM_OF_COLUMNS * sizeof(char));
-    } // Enviar la matriz
-    close(fd_1[1]); // Cerrar el extremo de escritura del pipe en el proceso padre
-    exit(1);
-  }
+        for (int i = 0; i < 8; i++) {
+          close(hilos_Enemy[i].pipe_2[1]);
+          read(hilos_Enemy[i].pipe_2[0], &computer_pieces[i].casillaX, sizeof(computer_pieces[i].x));
+          read(hilos_Enemy[i].pipe_2[0], &computer_pieces[i].casillaY, sizeof(computer_pieces[i].y));
+          close(hilos_Enemy[i].pipe_2[0]);
+        } 
+        chessboard = rewrite_chessboard(chessboard,user_pieces, computer_pieces);
+        print_chessboard(chessboard);
+        printf("Enemy turn is end\n");
+      } else {
+        // Child 2
+        int i = generar_numero_0_o_7();
+        
+        if (i == 4) {
+          pthread_create(&hilos_Enemy[i].hilo, NULL, &king_move, &hilos_Enemy[i]);
+          sleep(1);
+        } else {
+          pthread_create(&hilos_Enemy[i].hilo, NULL, &horse_move, &hilos_Enemy[i]);
+          sleep(1);
+        }
+
+        pthread_join(hilos_Enemy[i].hilo, NULL);
+
+        pthread_create(&hilos_Enemy[i].hilo, NULL, &casilla_actual, &hilos_Enemy[i]);
+        sleep(1);
   
+        pthread_join(hilos_Enemy[i].hilo, NULL);
+
+        printf("TERMINE PROCESO HIJO2\n");
+        exit(EXIT_SUCCESS);
+      }
+    } else {
+      // Child
+      int i = generar_numero_0_o_7();
+      if (i == 4) {
+        pthread_create(&hilos_Jugador[i].hilo, NULL, &king_move, &hilos_Jugador[i]);
+        sleep(1);
+      } else {
+        pthread_create(&hilos_Jugador[i].hilo, NULL, &horse_move, &hilos_Jugador[i]);
+        sleep(1);
+      }
+
+      pthread_join(hilos_Jugador[i].hilo, NULL);
+
+      pthread_create(&hilos_Jugador[i].hilo, NULL, &casilla_actual, &hilos_Jugador[i]);
+      sleep(1);
+
+      pthread_join(hilos_Jugador[i].hilo, NULL);
+
+      printf("TERMINE PROCESO HIJO\n");
+      exit(EXIT_SUCCESS);
+    }
+    
+  }
+  printf("GAME OVER, TO MUCH MOVEMENTS\n");
   return EXIT_SUCCESS;
 }
