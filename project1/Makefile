@@ -23,7 +23,8 @@ PROGRAM     = $(BIN_DIR)/wizard_chess.out
 
 # Specify the name of all the object files that will be created.
 BUILD_FILES = $(BUILD_DIR)/wizard_chess.o $(BUILD_DIR)/chessboard.o \
-							$(BUILD_DIR)/piece.o $(BUILD_DIR)/movements.o
+							$(BUILD_DIR)/piece.o $(BUILD_DIR)/pipe.o \
+							$(BUILD_DIR)/movements.o $(BUILD_DIR)/threadmove.o $(BUILD_DIR)/signalP.o
 
 # Allow make all and make clean to be executed even if there is a file
 # named 'all' or 'clean'.
@@ -52,8 +53,20 @@ $(BUILD_DIR)/chessboard.o: $(SRC_DIR)/chessboard.c $(SRC_DIR)/chessboard.h $(BUI
 	@echo "Compiling chessboard.c..."
 	$(COMPILE) $< -o $@
 
+$(BUILD_DIR)/pipe.o: $(SRC_DIR)/pipe.c $(SRC_DIR)/pipe.h $(BUILD_DIR)
+	@echo "Compiling pipe.c..."
+	$(COMPILE) $< -o $@
+
 $(BUILD_DIR)/movements.o: $(SRC_DIR)/movements.c $(SRC_DIR)/movements.h $(BUILD_DIR)
 	@echo "Compiling movements.c..."
+	$(COMPILE) $< -o $@
+
+$(BUILD_DIR)/threadmove.o: $(SRC_DIR)/threadmove.c $(SRC_DIR)/threadmove.h $(BUILD_DIR)
+	@echo "Compiling threadmove.c..."
+	$(COMPILE) $< -o $@
+
+$(BUILD_DIR)/signalP.o: $(SRC_DIR)/signalP.c $(SRC_DIR)/signalP.h $(BUILD_DIR)
+	@echo "Compiling signalP.c..."
 	$(COMPILE) $< -o $@
 
 $(BUILD_DIR)/piece.o: $(SRC_DIR)/piece.c $(SRC_DIR)/piece.h $(BUILD_DIR)

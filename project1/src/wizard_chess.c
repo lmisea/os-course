@@ -6,155 +6,83 @@
 
 #include "chessboard.h" /* create_chessboard, print_chessboard */
 #include "piece.h" /* create_user_pieces, create_computer_pieces, struct piece */
-#include "movements.h" /**/
-
+#include "movements.h" /* thread move */
+#include "pipe.h" /* init_pipe*/
+#include "signalP.h" /*elimnate_piece_enemy, eliminate_piece_player, win*/
+  
 #include <stdio.h>  /* printf */
 #include <stdlib.h> /* EXIT_SUCCESS */
 
-#include <sys/types.h>  /* Comandos para Hilos*/
 #include <sys/wait.h> /* Wait*/
-#include <unistd.h>   /* Comandos de UNIX*/
-#include <pthread.h>
-#include <signal.h>
-// primero de leer segundo de escribir
-int main(int argc, char const *argv[]) {
-  struct piece *user_pieces = create_user_pieces();
-  struct piece *computer_pieces = create_computer_pieces(); 
-  char **chessboard = create_chessboard(user_pieces, computer_pieces);
-  int cota = 0; 
-  int fd_1[2]; // Descriptores de archivo para la tubería
-  int fd_2[2]; // Descriptores de archivo para la tubería
-  int fd_3[2]; // Descriptores de archivo para la tubería
-  int fd_4[2]; // Descriptores de archivo para la tubería
+#include <unistd.h>   /* Comand UNIX*/
+#include <pthread.h>  /* pthread.create, pthread.join */
+#include <signal.h> /* signal */
 
-  signal(SIGUSR1, eliminandoPiezaEnemiga);
-  signal(SIGUSR2, eliminandoPiezaJugadora);
-  signal(SIGTERM, ganaron);
-  
+int main(int argc, char const *argv[]) {
+  struct piece *user_pieces = create_user_pieces(); // Create user pieces
+  struct piece *computer_pieces = create_computer_pieces(); // Create enemy piece
+  char **chessboard = create_chessboard(user_pieces, computer_pieces); // Create chessboard
   struct routine_Piece *hilos_Jugador;
   struct routine_Piece *hilos_Enemy;
-  // Crear el pipe
-  if (pipe(fd_1) == -1) {
-    perror("Error al crear el pipe");
-    exit(EXIT_FAILURE);
-  }
-  if (pipe(fd_2) == -1) {
-    perror("Error al crear el pipe");
-    exit(EXIT_FAILURE);
-  }
-  if (pipe(fd_3) == -1) {
-    perror("Error al crear el pipe");
-    exit(EXIT_FAILURE);
-  }
-  if (pipe(fd_4) == -1) {
-    perror("Error al crear el pipe");
-    exit(EXIT_FAILURE);
-  }
+  int cota = 0; 
 
-
+  signal(SIGUSR1,eliminate_piece_enemy);
+  signal(SIGUSR2,eliminate_piece_player);
+  signal(SIGTERM, win);
+  
   while(cota < 100) {
-    cota++;
-    hilos_Jugador = create_routine_pieces(user_pieces, chessboard);
-    for (int i = 0; i < 8; ++i) {
-      pipe(hilos_Jugador[i].pipe_1);
-    }
-    for (int i = 0; i < 8; ++i) {
-      pipe(hilos_Jugador[i].pipe_2);
-    }
+    cota++; // number of plays
+    hilos_Jugador = create_routine_pieces(user_pieces, chessboard); // Create the threads of the player pieces
+    printf("//////////////////////////////////////////////////////////////////\n");
+    printf("PLAYER TURN INIT\n");
+    // Start the pipes 
+    init_pipe(hilos_Jugador);
+
+    // Create a first process for the player pieces
     pid_t chessPlayer = fork();
 
     if (chessPlayer != 0) {
       // Father
+
+      // Wait for the child process to finish
       waitpid(chessPlayer, NULL, 0);
 
-      for (int i = 0; i < 8; i++) {
-        close(hilos_Jugador[i].pipe_1[1]);
-        read(hilos_Jugador[i].pipe_1[0], &user_pieces[i].x, sizeof(user_pieces[i].x));
-        read(hilos_Jugador[i].pipe_1[0], &user_pieces[i].y, sizeof(user_pieces[i].y));
-        close(hilos_Jugador[i].pipe_1[0]);
-      }
+      //Check the pipe player
+      read_pipe(hilos_Jugador, user_pieces);
 
-      for (int i = 0; i < 8; i++) {
-        close(hilos_Jugador[i].pipe_2[1]);
-        read(hilos_Jugador[i].pipe_2[0], &user_pieces[i].casillaX, sizeof(user_pieces[i].casillaX));
-        read(hilos_Jugador[i].pipe_2[0], &user_pieces[i].casillaY, sizeof(user_pieces[i].casillaY));
-        close(hilos_Jugador[i].pipe_2[0]);
-      }
+      // Create the new keyboard with the changed parts
       chessboard = rewrite_chessboard(chessboard,user_pieces, computer_pieces);
       print_chessboard(chessboard);
-      printf("Player turn is end\n");
+      printf("PLAYER TURN END\n");
+      printf("//////////////////////////////////////////////////////////////////\n");
+      sleep(2);
+
+      printf("//////////////////////////////////////////////////////////////////\n");
+      printf("ENEMY TURN INIT\n");
 
       hilos_Enemy = create_routine_pieces(computer_pieces, chessboard);
-      for (int i = 0; i < 8; ++i) {
-        pipe(hilos_Enemy[i].pipe_1);
-      }
-      for (int i = 0; i < 8; ++i) {
-        pipe(hilos_Enemy[i].pipe_2);
-      } 
+      init_pipe(hilos_Enemy);
       pid_t chessEnemy = fork();
       
       if (chessEnemy != 0) {
         // Father
         waitpid(chessEnemy, NULL, 0);
-        
-        printf("INICIO SEGUNDO PROCESO\n");
-        for (int i = 0; i < 8; i++) {
-          close(hilos_Enemy[i].pipe_1[1]);
-          read(hilos_Enemy[i].pipe_1[0], &computer_pieces[i].x, sizeof(computer_pieces[i].x));
-          read(hilos_Enemy[i].pipe_1[0], &computer_pieces[i].y, sizeof(computer_pieces[i].y));
-          close(hilos_Enemy[i].pipe_1[0]);
-        }
 
-        for (int i = 0; i < 8; i++) {
-          close(hilos_Enemy[i].pipe_2[1]);
-          read(hilos_Enemy[i].pipe_2[0], &computer_pieces[i].casillaX, sizeof(computer_pieces[i].x));
-          read(hilos_Enemy[i].pipe_2[0], &computer_pieces[i].casillaY, sizeof(computer_pieces[i].y));
-          close(hilos_Enemy[i].pipe_2[0]);
-        } 
+        // Check the pipe enemy
+        read_pipe(hilos_Enemy, computer_pieces);
         chessboard = rewrite_chessboard(chessboard,user_pieces, computer_pieces);
         print_chessboard(chessboard);
-        printf("Enemy turn is end\n");
+
+        printf("ENEMY TURN END\n");
+        printf("//////////////////////////////////////////////////////////////////\n");
       } else {
         // Child 2
-        int i = generar_numero_0_o_7();
-        
-        if (i == 4) {
-          pthread_create(&hilos_Enemy[i].hilo, NULL, &king_move, &hilos_Enemy[i]);
-          sleep(1);
-        } else {
-          pthread_create(&hilos_Enemy[i].hilo, NULL, &horse_move, &hilos_Enemy[i]);
-          sleep(1);
-        }
-
-        pthread_join(hilos_Enemy[i].hilo, NULL);
-
-        pthread_create(&hilos_Enemy[i].hilo, NULL, &casilla_actual, &hilos_Enemy[i]);
-        sleep(1);
-  
-        pthread_join(hilos_Enemy[i].hilo, NULL);
-
-        printf("TERMINE PROCESO HIJO2\n");
+        move_piece(hilos_Enemy);
         exit(EXIT_SUCCESS);
       }
     } else {
       // Child
-      int i = generar_numero_0_o_7();
-      if (i == 4) {
-        pthread_create(&hilos_Jugador[i].hilo, NULL, &king_move, &hilos_Jugador[i]);
-        sleep(1);
-      } else {
-        pthread_create(&hilos_Jugador[i].hilo, NULL, &horse_move, &hilos_Jugador[i]);
-        sleep(1);
-      }
-
-      pthread_join(hilos_Jugador[i].hilo, NULL);
-
-      pthread_create(&hilos_Jugador[i].hilo, NULL, &casilla_actual, &hilos_Jugador[i]);
-      sleep(1);
-
-      pthread_join(hilos_Jugador[i].hilo, NULL);
-
-      printf("TERMINE PROCESO HIJO\n");
+      move_piece(hilos_Jugador);
       exit(EXIT_SUCCESS);
     }
     

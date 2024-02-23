@@ -43,6 +43,9 @@ struct piece {
   enum piece_color color;   /* Color of the piece */
 };
 
+/**
+ * @brief Struct to represent a thread
+ */
 struct routine_Piece
 {
   char ** chessboard;
@@ -81,8 +84,15 @@ struct piece *create_computer_pieces();
 struct piece create_piece(enum piece_type type, int x, int y, int casillaX, int casillaY,
                           enum piece_color color);
 
-
-struct routine_Piece *create_routine_pieces(struct piece *piece, char ** chessboard /*, int *pipe1, int *pipe2*/);
+/**
+ * @brief Function to create a routine_piece
+ *
+ * @param piece The array of pieces .
+ * @param chessboard Used chess board
+ *
+ * @return Arrangement containing the threads of each piece
+ */
+struct routine_Piece *create_routine_pieces(struct piece *piece, char ** chessboard);
 
 /**
  * @brief Function to print a piece

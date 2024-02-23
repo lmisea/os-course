@@ -8,28 +8,47 @@
 #define MOVEMENTS_H
 
 /**
- * @brief Form of horse movements
- *
+ * @return returns 0 or 1
  */
-
-
 int generar_numero_0_o_1();
+
+/**
+ * @return returns an integer between 0 and 8
+ */
 int generar_numero_0_o_8();
+
+/**
+ * @return returns an integer between 0 and 7
+ */
 int generar_numero_0_o_7();
 
-void sendPosition(struct piece *pieces, int i, int *fd);
-void receivePosition(struct piece *pieces, int i, int *fd);
+/**
+ * @brief Verify that the movement is valid.
+ *
+ * @param x position in x.
+ * @param y position in y.
+ *
+ * @return returns 0 or 1
+ */
 int esValida(int x, int y);
 
+/**
+ * @brief Select a thread to initialize it.
+ *
+ * @param hilos pointer to the structure containing the threads
+ */
 
-void eliminandoPiezaEnemiga(int sig);
-void eliminandoPiezaJugadora(int sig);
-void ganaron(int sig);
+void move_piece(struct routine_Piece *hilos);
 
-void *horse_move(void *arg);
-void *king_move(void *arg);
-void *casilla_actual(void *arg);
+/**
+ * @brief Enter the new position and write it in the pipe.
+ *
+ * @param select pointer to the structure containing the threads.
+ * @param move_X new position in X.
+ * @param move_Y new position in Y.
+ * @param i position of the thread to work.
+ * 
+ */
+void rewrite_position(struct routine_Piece *select, int move_X, int move_Y, int i);
 
-void sendMatrix(int fd[], char **chessboard);
-void receiveMatrix(int fd[] ,char **chessboard);
 #endif /* MOVEMENTS_H */
