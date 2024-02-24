@@ -1,17 +1,14 @@
 # Project 1 - Real Wizard Chess
 
-> This project is made entirely in english, all the comments, variables, functions, and source files are in english.
-
 ### Contents
 
 - [Project 1 - Real Wizard Chess](#project-1---real-wizard-chess)
-  - [Contents](#contents)
+    - [Contents](#contents)
   - [Introduction](#introduction)
   - [How to play](#how-to-play)
     - [Compiling](#compiling)
     - [Running](#running)
     - [Cleaning](#cleaning)
-  - [Data Structures](#data-structures)
   - [Implementation](#implementation)
     - [Extra Credit](#extra-credit)
   - [Laboratory group](#laboratory-group)
@@ -51,8 +48,6 @@ To clean all the generated files, run the following command:
 ```bash
 make clean
 ```
-
-## Data Structures
 
 ## Implementation
 
