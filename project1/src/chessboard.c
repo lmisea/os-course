@@ -25,8 +25,8 @@ char **create_chessboard(struct piece *user_pieces,
   return chessboard;
 }
 
-char **rewrite_chessboard(char ** chessboard, struct piece *user_pieces,
-                         struct piece *computer_pieces) {
+char **rewrite_chessboard(char **chessboard, struct piece *user_pieces,
+                          struct piece *computer_pieces) {
   /* Initialize the chessboard and add the default pieces */
   init_chessboard(chessboard);
   add_default_pieces_to_chessboard(chessboard, user_pieces, computer_pieces);
@@ -85,8 +85,9 @@ void add_piece_to_chessboard(char **chessboard, struct piece p) {
 void print_chessboard(char **chessboard) {
   for (int i = 0; i < NUM_OF_ROWS; i++) {
     for (int j = 0; j < NUM_OF_COLUMNS; j++) {
-      //printf("linea %d columna %d:%c. y valor en %d\n",i,j ,chessboard[i][j], (int)chessboard[i][j]);
-      printf("%c",chessboard[i][j]);
+      // printf("linea %d columna %d:%c. y valor en %d\n",i,j ,chessboard[i][j],
+      // (int)chessboard[i][j]);
+      printf("%c", chessboard[i][j]);
     }
   }
 }

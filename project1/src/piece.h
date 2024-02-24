@@ -40,16 +40,15 @@ struct piece {
   int y;                    /* Y coordinate of the piece */
   int casillaX;
   int casillaY;
-  enum piece_color color;   /* Color of the piece */
+  enum piece_color color; /* Color of the piece */
 };
 
 /**
  * @brief Struct to represent a thread
  */
-struct routine_Piece
-{
-  char ** chessboard;
-  struct piece *pieces; 
+struct routine_Piece {
+  char **chessboard;
+  struct piece *pieces;
   int pipe_1[2];
   int pipe_2[2];
   int id;
@@ -81,8 +80,8 @@ struct piece *create_computer_pieces();
  *
  * @return A piece with the given type, coordinates and color
  */
-struct piece create_piece(enum piece_type type, int x, int y, int casillaX, int casillaY,
-                          enum piece_color color);
+struct piece create_piece(enum piece_type type, int x, int y, int casillaX,
+                          int casillaY, enum piece_color color);
 
 /**
  * @brief Function to create a routine_piece
@@ -92,7 +91,8 @@ struct piece create_piece(enum piece_type type, int x, int y, int casillaX, int 
  *
  * @return Arrangement containing the threads of each piece
  */
-struct routine_Piece *create_routine_pieces(struct piece *piece, char ** chessboard);
+struct routine_Piece *create_routine_pieces(struct piece *piece,
+                                            char **chessboard);
 
 /**
  * @brief Function to print a piece

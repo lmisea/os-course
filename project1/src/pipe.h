@@ -11,7 +11,7 @@
  * @brief reads the pipe buffers of each thread.
  * @param hilos contains a pointer to the structure that owns the threads.
  * @param pieces pointer to the set of pieces.
- * 
+ *
  */
 
 void read_pipe(struct routine_Piece *hilos, struct piece *pieces);

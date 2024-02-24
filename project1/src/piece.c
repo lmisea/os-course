@@ -13,10 +13,12 @@ struct piece *create_user_pieces() {
   struct piece *user_pieces = (struct piece *)malloc(8 * sizeof(struct piece));
   for (int i = 0; i < 8; i++) {
     if (i == 4) {
-      user_pieces[i] = create_piece(KING, ((i + 1) * 6) + 2 * i, 30, i+1, 1, WHITE);
+      user_pieces[i] =
+          create_piece(KING, ((i + 1) * 6) + 2 * i, 30, i + 1, 1, WHITE);
       continue;
     }
-    user_pieces[i] = create_piece(KNIGHT, ((i + 1) * 6) + 2 * i, 30, i+1, 1, WHITE);
+    user_pieces[i] =
+        create_piece(KNIGHT, ((i + 1) * 6) + 2 * i, 30, i + 1, 1, WHITE);
   }
   return user_pieces;
 }
@@ -26,15 +28,18 @@ struct piece *create_computer_pieces() {
       (struct piece *)malloc(8 * sizeof(struct piece));
   for (int i = 0; i < 8; i++) {
     if (i == 4) {
-      computer_pieces[i] = create_piece(KING, ((i + 1) * 6) + 2 * i, 2, i+1, 8 ,BLACK);
+      computer_pieces[i] =
+          create_piece(KING, ((i + 1) * 6) + 2 * i, 2, i + 1, 8, BLACK);
       continue;
     }
-    computer_pieces[i] = create_piece(KNIGHT, ((i + 1) * 6) + 2 * i, 2, i+1, 8, BLACK);
+    computer_pieces[i] =
+        create_piece(KNIGHT, ((i + 1) * 6) + 2 * i, 2, i + 1, 8, BLACK);
   }
   return computer_pieces;
 }
 
-struct routine_Piece *create_routine_pieces(struct piece *piece, char ** chessboard) {
+struct routine_Piece *create_routine_pieces(struct piece *piece,
+                                            char **chessboard) {
   struct routine_Piece *routine_pieces =
       (struct routine_Piece *)malloc(8 * sizeof(struct routine_Piece));
   for (int i = 0; i < 8; i++) {
@@ -45,8 +50,8 @@ struct routine_Piece *create_routine_pieces(struct piece *piece, char ** chessbo
   return routine_pieces;
 }
 
-struct piece create_piece(enum piece_type type, int x, int y, int casillaX, int casillaY,
-                          enum piece_color color) {
+struct piece create_piece(enum piece_type type, int x, int y, int casillaX,
+                          int casillaY, enum piece_color color) {
   struct piece p;
   p.status = INBOARD;
   p.type = type;

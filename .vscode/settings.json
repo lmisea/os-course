@@ -7,7 +7,10 @@
     "pokeball",
     "pokemon",
     "pokeshop",
-    "READCHAR"
+    "READCHAR",
+    "SIGNALP",
+    "threadmove",
+    "THREADMOVE"
   ],
   "files.associations": {
     "stdlib.h": "c",

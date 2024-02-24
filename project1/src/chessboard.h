@@ -65,7 +65,7 @@ char **create_chessboard(struct piece *user_pieces,
 
 /**
  * @brief Generates a new chess table with the new positions.
- * 
+ *
  * @param chessboard The array of pieces for the new user.
  * @param user_pieces The array of pieces for the new user.
  * @param computer_pieces The array of pieces for the new computer.
@@ -73,7 +73,7 @@ char **create_chessboard(struct piece *user_pieces,
  * @return Pointer to new table.
  */
 char **rewrite_chessboard(char **chessboard, struct piece *user_pieces,
-                         struct piece *computer_pieces);
+                          struct piece *computer_pieces);
 
 /**
  * @brief Initialize the chessboard by adding the chessboard lines and the

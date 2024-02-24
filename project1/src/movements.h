@@ -47,8 +47,9 @@ void move_piece(struct routine_Piece *hilos);
  * @param move_X new position in X.
  * @param move_Y new position in Y.
  * @param i position of the thread to work.
- * 
+ *
  */
-void rewrite_position(struct routine_Piece *select, int move_X, int move_Y, int i);
+void rewrite_position(struct routine_Piece *select, int move_X, int move_Y,
+                      int i);
 
 #endif /* MOVEMENTS_H */
